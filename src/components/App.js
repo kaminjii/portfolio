@@ -11,6 +11,9 @@ import ExperienceSection from './sections/ExperienceSection';
 import ContactSection from './sections/ContactSection';
 import Footer from './Footer';
 import '../app/globals.css';
+import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiJenkins } from 'react-icons/si';
+import { BiLogoAws, BiLogoJava } from "react-icons/bi";
+import { PiFileCpp } from "react-icons/pi";
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -57,6 +60,21 @@ const App = () => {
     }
   };
 
+  const techIcons = {
+    'JavaScript': <SiJavascript className="text-yellow-400" />,
+    'React': <SiReact className="text-blue-400" />,
+    'Node.js': <SiNodedotjs className="text-green-400" />,
+    'TypeScript': <SiTypescript className="text-blue-500" />,
+    'Firebase': <SiFirebase className="text-yellow-500" />,
+    'Python': <SiPython className="text-blue-300" />,
+    'Swift/SwiftUI': <SiSwift className="text-orange-400" />,
+    'SQL': <SiMysql className="text-blue-600" />,
+    'AWS': <BiLogoAws className="text-orange-500" />,
+    'Java': <BiLogoJava className="text-red-500" />,
+    'C++': <PiFileCpp className="text-blue-400" />,
+    'Jenkins': <SiJenkins className="text-red-400" />
+  };
+
   return (
     <div className="bg-gray-900 text-gray-100 min-h-screen relative">
       <CustomCursor />
@@ -80,8 +98,8 @@ const App = () => {
           </FadeIn>
           
           <FadeIn delay={300}>
-            <div className="h-[4rem]">
-              <h2 className="text-4xl sm:text-6xl font-bold text-gray-400 typing-effect inline-block overflow-hidden whitespace-nowrap">
+            <div className="h-auto">
+              <h2 className="text-4xl sm:text-6xl font-bold text-gray-400 typing-effect inline-block whitespace-nowrap leading-relaxed">
                 I build things for the web.
               </h2>
             </div>
@@ -143,9 +161,10 @@ const App = () => {
                 <div className="relative py-6">
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
                     {[
-                      'JavaScript (ES6+)', 'React', 'Node.js', 
+                      'JavaScript', 'React', 'Node.js', 
                       'TypeScript', 'Firebase', 'Python', 
-                      'Swift/SwiftUI', 'SQL', 'Azure'
+                      'Swift/SwiftUI', 'SQL', 'AWS', 'Java',
+                      'C++', 'Jenkins'
                     ].map((tech, index) => (
                       <div 
                         key={index} 
@@ -153,7 +172,7 @@ const App = () => {
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div className="relative p-3 border border-gray-800 rounded-md bg-gray-900/40 backdrop-blur-sm flex items-center hover:border-gray-700 transition-colors duration-300">
-                          <span className="text-teal-400 mr-2">▹</span>
+                          <span className="mr-2">{techIcons[tech]}</span>
                           <span className="text-gray-300 group-hover:text-white transition-colors">{tech}</span>
                         </div>
                       </div>
@@ -169,7 +188,7 @@ const App = () => {
                 <div className="relative bg-teal-400/20 rounded overflow-hidden">
                   <div className="absolute inset-0 bg-teal-400 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-0"></div>
                   <img 
-                    src="/api/placeholder/300/300" 
+                    src="headshot.png" 
                     alt="Kaitlin Wood" 
                     className="relative z-10 mx-auto transition-transform duration-500 group-hover:scale-105"
                   />

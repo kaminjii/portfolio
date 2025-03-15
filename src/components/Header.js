@@ -127,6 +127,15 @@ const handleNavClick = (section, e) => {
                 <span className={`absolute left-0 bottom-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 ${activeSection === section ? 'w-full' : 'group-hover:w-full'}`}></span>
               </button>
             ))}
+
+            {/* Resume Download Button */}
+            <a
+              href="resume.pdf"
+              download="KaitlinWood_Resume.pdf"
+              className="text-sm font-medium uppercase tracking-widest px-4 py-2 border border-teal-400 text-teal-400 rounded hover:bg-teal-900/20 transition-all duration-300"
+            >
+              Resume
+            </a>
           </div>
           
           {/* Mobile Navigation Button */}
