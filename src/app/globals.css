@@ -19,6 +19,10 @@
   }
 }
 
+html {
+  font-size: larger;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -130,8 +134,7 @@ body {
   width: 0;
   height: 2px;
   display: block;
-  margin-top: 2px;
-  right: 0;
+  margin-top: 20px;
   @apply bg-teal-400;
   transition: width 0.3s ease;
 }
@@ -139,13 +142,12 @@ body {
 .link-underline:hover:after {
   width: 100%;
   left: 0;
-  right: auto;
 }
 
 /* Typing effect for hero section */
 @keyframes typing {
   from { width: 0 }
-  to { width: 100% }
+  to { width: 65% }
 }
 
 @keyframes blink-caret {

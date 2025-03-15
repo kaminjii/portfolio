@@ -28,16 +28,18 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 border-t border-gray-800 pt-10 pb-6 relative">
       {/* Scroll to top button */}
-      <button 
-        onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 p-3 rounded-full bg-teal-500/20 border border-teal-400 text-teal-400 transition-all duration-300 z-10
-                  ${showScrollTop ? 'opacity-100 transform-none' : 'opacity-0 translate-y-10 pointer-events-none'}`}
-        aria-label="Scroll to top"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
-        </svg>
-      </button>
+      <div className='flex justify-end items-right pr-10'>
+        <button 
+          onClick={scrollToTop}
+          className={`p-3 rounded-full bg-teal-500/20 border border-teal-400 text-teal-400 transition-all duration-300 z-10
+                    ${showScrollTop ? 'opacity-100 transform-none' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+          aria-label="Scroll to top"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+          </svg>
+        </button>
+      </div>
       
       {/* Social links */}
       <div className="flex justify-center mb-8">

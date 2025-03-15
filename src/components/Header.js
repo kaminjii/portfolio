@@ -123,7 +123,7 @@ const handleNavClick = (section, e) => {
                 className={`group relative text-sm font-medium uppercase tracking-widest px-1 py-2 transition-all duration-300 ${activeSection === section ? 'text-teal-400' : 'text-gray-400 hover:text-white'}`}
                 style={{ transitionProperty: 'color, transform', transformStyle: 'preserve-3d' }}
               >
-                <span className="opacity-60 mr-1">0{index + 1}.</span> {section}
+                {section !== 'home' && <span className="opacity-60 mr-1">0{index}</span>} {section}
                 <span className={`absolute left-0 bottom-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 ${activeSection === section ? 'w-full' : 'group-hover:w-full'}`}></span>
               </button>
             ))}
