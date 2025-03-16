@@ -3,9 +3,9 @@
 import React, { useState, useRef } from 'react';
 import { ExternalLink } from 'lucide-react';
 import FadeIn from '../animations/FadeIn';
-import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiXcode, SiHtml5, SiCss3, SiJenkins, SiSubversion, SiTensorflow, SiScikitlearn, SiJest, SiFigma, SiJsonwebtokens } from 'react-icons/si';
-import { BiLogoKepler } from 'react-icons/bi';
+import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiXcode, SiHtml5, SiCss3, SiJenkins, SiSubversion, SiTensorflow, SiScikitlearn, SiJest, SiFigma, SiJsonwebtokens, SiTailwindcss, SiUnity } from 'react-icons/si';
 import { VscAzure } from "react-icons/vsc";
+import { PiFileCSharp, PiFileCpp } from "react-icons/pi";
 
 
 // Map technologies to their icons
@@ -33,6 +33,10 @@ const techIcons = {
   'Jest': <SiJest className="text-red-500" />,
   'Figma': <SiFigma className="text-blue-400" />,
   'JWT': <SiJsonwebtokens className="text-blue-400" />,
+  'TailwindCSS': <SiTailwindcss className="text-blue-400" />,
+  'Unity': <SiUnity className="text-gray-400" />,
+  'C#': <PiFileCSharp className="text-blue-400" />,
+  'C++': <PiFileCpp className="text-blue-400" />,
 };
 
 // Project data from resume
@@ -47,10 +51,7 @@ const projectsData = [
       'Developed Firebase Storage system with automatic image compression and caching, cutting load times by 65%'
     ],
     tech: ['SwiftUI', 'XCode', 'Firestore', 'Firebase Auth', 'Firebase Storage', 'Figma'],
-    links: { 
-      github: 'https://github.com/kaminjii/glow',
-      live: 'https://glow-demo.app'
-    },
+    links: { },
     image: 'glow.png',
     featured: true
   },
@@ -69,6 +70,23 @@ const projectsData = [
       live: 'https://dropawf.pages.dev/'
     },
     image: 'dropawf.png',
+    featured: true
+  },
+    {
+    id: 'shades of dungeon',
+    title: 'Shades of Dungeon',
+    description: 'Browser-based pixel art game featuring recoil mechanics, collision control, and four original puzzles using Pixi.js and React.js. Built an intuitive level creation interface, improving modification efficiency, and optimized movement mechanics for smoother animations.',
+    points: [
+      'Led 5 developers to create and deploy a full-stack courier service web application, boosting operational efficiency',
+      'Optimized queries and implemented multi-screen forms, reducing data retrieval time by 25% and errors by 40%',
+      'Implemented user authentication for 5 user-roles using JWT, enhancing data protection and user access control'
+    ],
+    tech: ['React.js', 'HTML', 'TailwindCSS', 'Pixi.js'],
+    links: { 
+      github: 'https://github.com/kaminjii/glassas',
+      live: 'https://devpost.com/software/team-cuties-general-track'
+    },
+    image: 'shades.png',
     featured: true
   },
   {
@@ -97,12 +115,52 @@ const projectsData = [
       'Employed TensorFlow and PyTorch for data cleaning and model training, improving accuracy and data quality'
     ],
     tech: ['Python', 'Kepler.gl', 'Scikit-learn', 'PyTorch', 'TensorFlow'],
-    links: { 
-      github: 'https://github.com/kaminjii/asthma-analysis'
-    },
+    links: { },
     image: null,
     featured: false
-  }
+  },
+  {
+    id: 'fighting game',
+    title: 'Fighting Game',
+    description: 'Fighting game built with Unity, featuring 2D character models, custom animations, and a dynamic camera system. Implemented player controls, AI, and combat mechanics.',
+    points: [
+      'Developed Wordle game with modular, reusable components, reducing code duplication and improving scalability',
+      'Streamlined development with Jenkins CI/CD, boosting reliability and speeding up feature delivery by 10%',
+      'Integrated spell-check and word selection API, reducing manual errors by 40%, streamlining workflow efficiency'
+    ],
+    tech: ['Unity', 'C#', 'Clip Studio Paint', 'Aseprite'],
+    links: { },
+    image: null,
+    featured: false
+  },
+    {
+    id: 'pager plus',
+    title: 'Pager Plus',
+    description: 'Network pager system built with Python, integrating Twilio API for SMS messaging and Flask for web server. Features include AI risk assessment, message scheduling, and real-time message status updates.',
+    points: [
+      'Developed Wordle game with modular, reusable components, reducing code duplication and improving scalability',
+      'Streamlined development with Jenkins CI/CD, boosting reliability and speeding up feature delivery by 10%',
+      'Integrated spell-check and word selection API, reducing manual errors by 40%, streamlining workflow efficiency'
+    ],
+    tech: ['Unity', 'C#', 'Clip Studio Paint', 'Aseprite'],
+    links: { },
+    image: null,
+    featured: false
+  },
+  {
+    id: 'entropy',
+    title: 'Incremental Entropy Calculator',
+    description: 'C++ project designed to efficiently compute entropy from a continuous stream of data using multithreading and locks for concurrency control. The program processes incoming data in chunks, updating entropy calculations incrementally while ensuring thread safety.',
+    points: [
+      'Performed EDA on 68,000+ records, identifying trends to guide predictive models and improve accuracy by 15%',
+      'Utilized Kepler.gl to visualize geospatial data, revealing correlations between asthma hot spots and UPRR lines',
+      'Employed TensorFlow and PyTorch for data cleaning and model training, improving accuracy and data quality'
+    ],
+    tech: ['C++'],
+    links: { },
+    image: null,
+    featured: false
+  },
 ];
 
 // Featured Project component with image
