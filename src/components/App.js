@@ -11,12 +11,16 @@ import ExperienceSection from './sections/ExperienceSection';
 import ContactSection from './sections/ContactSection';
 import Footer from './Footer';
 import '../app/globals.css';
-import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiJenkins } from 'react-icons/si';
+import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiJenkins, SiDocker, SiKubernetes, SiGraphql, SiRedux, SiSass, SiWebpack, SiPytest, SiTailwindcss, SiNextdotjs, SiIntellijidea, SiXcode, SiExpo, SiApachemaven, SiJunit5, SiJest, SiGithub } from 'react-icons/si';
 import { BiLogoAws, BiLogoJava } from "react-icons/bi";
 import { PiFileCpp } from "react-icons/pi";
+import { VscAzure, VscVscode } from "react-icons/vsc";
+import GitHubSection from './sections/GitHubSection';
+import PerformanceDashboard from './sections/PerformanceDashboard';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [showHiddenTech, setShowHiddenTech] = useState(false);
   
   const sections = ['home', 'about', 'experience', 'projects', 'contact'];
   const sectionRefs = {
@@ -62,18 +66,43 @@ const App = () => {
 
   const techIcons = {
     'JavaScript': <SiJavascript className="text-yellow-400" />,
-    'React': <SiReact className="text-blue-400" />,
-    'Node.js': <SiNodedotjs className="text-green-400" />,
     'TypeScript': <SiTypescript className="text-blue-500" />,
-    'Firebase': <SiFirebase className="text-yellow-500" />,
     'Python': <SiPython className="text-blue-300" />,
-    'Swift/SwiftUI': <SiSwift className="text-orange-400" />,
-    'SQL': <SiMysql className="text-blue-600" />,
-    'AWS': <BiLogoAws className="text-orange-500" />,
     'Java': <BiLogoJava className="text-red-500" />,
     'C++': <PiFileCpp className="text-blue-400" />,
-    'Jenkins': <SiJenkins className="text-red-400" />
+    'SQL': <SiMysql className="text-cyan-600" />,
+    'React.js': <SiReact className="text-blue-400" />,
+    'Node.js': <SiNodedotjs className="text-green-400" />,
+    'Express.js': <SiNodedotjs className="text-green-400" />,
+    'Next.js': <SiNextdotjs className="text-gray-400" />,
+    'TailwindCSS': <SiTailwindcss className="text-teal-400" />,
+    'Swift/SwiftUI': <SiSwift className="text-amber-600" />,
+    'HTML/CSS': <SiSass className="text-orange-400" />,
+    'Azure': <VscAzure className="text-blue-400" />,
+    'AWS': <BiLogoAws className="text-orange-500" />,
+    'Jenkins': <SiJenkins className="text-red-400" />,
+    'Firebase': <SiFirebase className="text-yellow-500" />,
+    'Git/GitHub': <SiGithub className="text-gray-400" />,
+    'VSCode': <VscVscode className="text-sky-400" />,
+    'IntelliJ': <SiIntellijidea className="text-blue-500" />,
+    'XCode': <SiXcode className="text-sky-500" />,
+    'Expo': <SiExpo className="text-gray-400" />,
+    'Maven': <SiApachemaven className="text-rose-700" />,
+    'JUnit': <SiJunit5 className="text-red-500" />,
+    'Pytest': <SiPytest className="text-cyan-400" />,
+    'Jest': <SiJest className="text-pink-900" />,
   };
+
+  const mainTechnologies = [
+    'JavaScript', 'TypeScript', 'Python', 'React.js', 'Node.js', 
+    'SQL', 'AWS', 'Firebase', 'Swift/SwiftUI'
+  ];
+
+  const hiddenTechnologies = [
+    'TailwindCSS', 'Java', 'C++', 'Express.js', 'Next.js', 'HTML/CSS', 'Azure', 
+    'Jenkins', 'Git/GitHub', 'VSCode', 'IntelliJ', 'XCode', 
+    'Expo', 'Maven', 'JUnit', 'Pytest', 'Jest'
+  ];
 
   return (
     <div className="bg-gray-900 text-gray-100 min-h-screen relative">
@@ -89,6 +118,9 @@ const App = () => {
       <main className="max-w-6xl mx-auto px-6 pt-28 pb-20">
         {/* Home Section */}
         <section ref={sectionRefs.home} id="home" className="min-h-screen flex flex-col justify-center py-20">
+          
+          {/* <Hero /> */}
+          
           <FadeIn delay={100}>
             <p className="text-teal-400 mb-4 font-mono">Hi, my name is</p>
           </FadeIn>
@@ -100,14 +132,13 @@ const App = () => {
           <FadeIn delay={300}>
             <div className="h-auto">
               <h2 className="text-4xl sm:text-6xl font-bold text-gray-400 typing-effect inline-block whitespace-nowrap leading-relaxed">
-                I build things for the web.
+                I am a Software Engineer
               </h2>
             </div>
           </FadeIn>
           
           <FadeIn delay={400}>
             <p className="text-gray-300 max-w-xl mb-8">
-              I'm a software engineer specializing in building exceptional digital experiences. 
               Currently, I'm focused on building accessible, user-centered products at {' '}
               <a href="#" className="text-teal-400 hover:underline link-underline">Mastercard</a>.
             </p>
@@ -160,12 +191,7 @@ const App = () => {
               <FadeIn delay={400}>
                 <div className="relative py-6">
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-                    {[
-                      'JavaScript', 'React', 'Node.js', 
-                      'TypeScript', 'Firebase', 'Python', 
-                      'Swift/SwiftUI', 'SQL', 'AWS', 'Java',
-                      'C++', 'Jenkins'
-                    ].map((tech, index) => (
+                    {mainTechnologies.map((tech, index) => (
                       <div 
                         key={index} 
                         className="group relative overflow-hidden"
@@ -178,6 +204,28 @@ const App = () => {
                       </div>
                     ))}
                   </div>
+                  {showHiddenTech && (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mt-4">
+                      {hiddenTechnologies.map((tech, index) => (
+                        <div 
+                          key={index} 
+                          className="group relative overflow-hidden"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          <div className="relative p-3 border border-gray-800 rounded-md bg-gray-900/40 backdrop-blur-sm flex items-center hover:border-gray-700 transition-colors duration-300">
+                            <span className="mr-2">{techIcons[tech]}</span>
+                            <span className="text-gray-300 group-hover:text-white transition-colors">{tech}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <button 
+                    onClick={() => setShowHiddenTech(!showHiddenTech)}
+                    className="mt-4 text-teal-400 hover:underline"
+                  >
+                    {showHiddenTech ? 'Show Less' : 'Show More'}
+                  </button>
                 </div>
               </FadeIn>
             </div>
@@ -203,12 +251,16 @@ const App = () => {
         
         {/* Projects Section */}
         <ProjectsSection sectionRef={sectionRefs.projects} />
+
+        <GitHubSection sectionRef={sectionRefs.github} />
         
         {/* Contact Section */}
         <ContactSection sectionRef={sectionRefs.contact} />
       </main>
       
       <Footer />
+
+      <PerformanceDashboard />
     </div>
   );
 };

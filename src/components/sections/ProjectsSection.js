@@ -3,10 +3,10 @@
 import React, { useState, useRef } from 'react';
 import { ExternalLink } from 'lucide-react';
 import FadeIn from '../animations/FadeIn';
-import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiXcode, SiHtml5, SiCss3, SiJenkins, SiSubversion, SiTensorflow, SiScikitlearn, SiJest, SiFigma, SiJsonwebtokens, SiTailwindcss, SiUnity } from 'react-icons/si';
+import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiXcode, SiHtml5, SiCss3, SiJenkins, SiSubversion, SiTensorflow, SiScikitlearn, SiJest, SiFigma, SiJsonwebtokens, SiTailwindcss, SiUnity, SiTwilio, SiStreamlit, SiRuby, SiKotlin, SiPytest } from 'react-icons/si';
 import { VscAzure } from "react-icons/vsc";
 import { PiFileCSharp, PiFileCpp } from "react-icons/pi";
-
+import { BiLogoJava } from "react-icons/bi";
 
 // Map technologies to their icons
 const techIcons = {
@@ -20,7 +20,6 @@ const techIcons = {
   'MySQL': <SiMysql className="text-blue-600" />,
   'TensorFlow': <SiTensorflow className="text-orange-500" />,
   'Sci-kit Learn': <SiScikitlearn className="text-blue-300" />,
-  'PyTorch': <SiJavascript className="text-red-500" />,
   'Azure': <VscAzure className="text-blue-400" />,
   'XCode': <SiXcode className="text-blue-400" />,
   'Firestore': <SiFirebase className="text-yellow-500" />,
@@ -37,6 +36,12 @@ const techIcons = {
   'Unity': <SiUnity className="text-gray-400" />,
   'C#': <PiFileCSharp className="text-blue-400" />,
   'C++': <PiFileCpp className="text-blue-400" />,
+  'Twilio': <SiTwilio className="text-red-400" />,
+  'Streamlit': <SiStreamlit className="text-orange-600" />,
+  'Ruby': <SiRuby className="text-rose-600" />,
+  'Kotlin': <SiKotlin className="text-fuchsia-600" />,
+  'Java': <BiLogoJava className="text-sky-600" />,
+  'Pytest': <SiPytest className="text-cyan-400" />,
 };
 
 // Project data from resume
@@ -98,7 +103,7 @@ const projectsData = [
       'Streamlined development with Jenkins CI/CD, boosting reliability and speeding up feature delivery by 10%',
       'Integrated spell-check and word selection API, reducing manual errors by 40%, streamlining workflow efficiency'
     ],
-    tech: ['Python', 'Unittest', 'Coverage.py', 'Paver', 'Pygame', 'Jenkins', 'Subversion'],
+    tech: ['Python', 'Pytest', 'Coverage.py', 'Paver', 'Pygame', 'Jenkins', 'Subversion'],
     links: { 
       github: 'https://github.com/kaminjii/wordle'
     },
@@ -115,35 +120,43 @@ const projectsData = [
       'Employed TensorFlow and PyTorch for data cleaning and model training, improving accuracy and data quality'
     ],
     tech: ['Python', 'Kepler.gl', 'Scikit-learn', 'PyTorch', 'TensorFlow'],
-    links: { },
+    links: { 
+      live: 'https://docs.google.com/presentation/d/1JfcGZgNcTMChKZFgFx2aYGrDBVClSnuJjORsl8ye5jo/edit?usp=sharing'
+    },
     image: null,
     featured: false
   },
   {
     id: 'fighting game',
     title: 'Fighting Game',
-    description: 'Fighting game built with Unity, featuring 2D character models, custom animations, and a dynamic camera system. Implemented player controls, AI, and combat mechanics.',
-    points: [
-      'Developed Wordle game with modular, reusable components, reducing code duplication and improving scalability',
-      'Streamlined development with Jenkins CI/CD, boosting reliability and speeding up feature delivery by 10%',
-      'Integrated spell-check and word selection API, reducing manual errors by 40%, streamlining workflow efficiency'
-    ],
-    tech: ['Unity', 'C#', 'Clip Studio Paint', 'Aseprite'],
-    links: { },
+    description: 'Fighting game built with Unity, featuring 2D character models and custom animations. Developed a custom physics engine for realistic movement and collision detection.',
+    points: [],
+    tech: ['Unity', 'C#', 'Clip Studio Paint'],
+    links: { 
+      live: 'https://drive.google.com/file/d/1xbz7PjArosTPKJZpQbfft8_FvMhjy1OK/view?usp=sharing'
+    },
     image: null,
     featured: false
   },
-    {
+  {
     id: 'pager plus',
     title: 'Pager Plus',
     description: 'Network pager system built with Python, integrating Twilio API for SMS messaging and Flask for web server. Features include AI risk assessment, message scheduling, and real-time message status updates.',
-    points: [
-      'Developed Wordle game with modular, reusable components, reducing code duplication and improving scalability',
-      'Streamlined development with Jenkins CI/CD, boosting reliability and speeding up feature delivery by 10%',
-      'Integrated spell-check and word selection API, reducing manual errors by 40%, streamlining workflow efficiency'
-    ],
-    tech: ['Unity', 'C#', 'Clip Studio Paint', 'Aseprite'],
-    links: { },
+    points: [],
+    tech: ['Python', 'Twilio', 'Streamlit'],
+    links: { 
+      github: 'https://github.com/kaminjii/pager-plus'
+    },
+    image: null,
+    featured: false
+  },
+      {
+    id: 'dsl',
+    title: 'Domain-Specific Language',
+    description: 'DSL projects built with Kotlin and Ruby, featuring a custom parser and interpreter for a simplified programming language. Developed a REPL for real-time code execution and error handling.',
+    points: [],
+    tech: ['Ruby', 'Kotlin', 'Java', 'Subversion'],
+    links: {},
     image: null,
     featured: false
   },
@@ -151,11 +164,7 @@ const projectsData = [
     id: 'entropy',
     title: 'Incremental Entropy Calculator',
     description: 'C++ project designed to efficiently compute entropy from a continuous stream of data using multithreading and locks for concurrency control. The program processes incoming data in chunks, updating entropy calculations incrementally while ensuring thread safety.',
-    points: [
-      'Performed EDA on 68,000+ records, identifying trends to guide predictive models and improve accuracy by 15%',
-      'Utilized Kepler.gl to visualize geospatial data, revealing correlations between asthma hot spots and UPRR lines',
-      'Employed TensorFlow and PyTorch for data cleaning and model training, improving accuracy and data quality'
-    ],
+    points: [],
     tech: ['C++'],
     links: { },
     image: null,

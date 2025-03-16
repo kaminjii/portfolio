@@ -15,6 +15,9 @@ const ParticleBackground = () => {
       canvas.height = window.innerHeight;
     };
     
+    handleResize(); // Ensure dimensions are set on mount
+    window.addEventListener('resize', handleResize);
+    
     // Track mouse position
     const handleMouseMove = (e) => {
       mousePosition = {
@@ -23,9 +26,7 @@ const ParticleBackground = () => {
       };
     };
     
-    window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
-    handleResize();
     
     // Particle class
     class Particle {
@@ -95,6 +96,7 @@ const ParticleBackground = () => {
     
     // Animation loop
     const animate = () => {
+      console.log("animating...")
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       for (let i = 0; i < particlesArray.length; i++) {
@@ -133,7 +135,7 @@ const ParticleBackground = () => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 -z-10 opacity-30"
+      className="fixed inset-0 opacity-50"
     />
   );
 };

@@ -66,7 +66,7 @@ const CustomCursor = () => {
   // Simplify the cursor to just one element for better performance
   return (
     <div 
-      className={`fixed w-6 h-6 rounded-full border-2 border-teal-400 pointer-events-none z-50 
+      className={`fixed w-6 h-6 rounded-full border-2 border-teal-400 pointer-events-none z-60 
                  ${cursorHidden ? 'opacity-0' : 'opacity-70'} 
                  ${isHovering ? 'scale-150' : ''}`}
       style={{ 
