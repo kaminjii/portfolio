@@ -126,20 +126,20 @@ const App = () => {
           </FadeIn>
           
           <FadeIn delay={200}>
-            <h1 className="text-5xl sm:text-7xl font-bold text-gray-100 mb-4">Kaitlin Wood.</h1>
+            <h1 className="text-5xl sm:text-7xl font-bold text-gray-100 mb-4">Kaitlin Wood</h1>
           </FadeIn>
           
           <FadeIn delay={300}>
             <div className="h-auto">
               <h2 className="text-4xl sm:text-6xl font-bold text-gray-400 typing-effect inline-block whitespace-nowrap leading-relaxed">
-                I am a Software Engineer
+                I am a Software Engineer.
               </h2>
             </div>
           </FadeIn>
           
           <FadeIn delay={400}>
             <p className="text-gray-300 max-w-xl mb-8">
-              Currently, I'm focused on building accessible, user-centered products at {' '}
+              Currently, I'm focused on building accessible, user-centered products and improving web development skills at  {' '}
               <a href="#" className="text-teal-400 hover:underline link-underline">Mastercard</a>.
             </p>
           </FadeIn>

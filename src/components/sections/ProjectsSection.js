@@ -139,8 +139,8 @@ const projectsData = [
     featured: false
   },
   {
-    id: 'pager plus',
-    title: 'Pager Plus',
+    id: 'pager+',
+    title: 'Pager+',
     description: 'Network pager system built with Python, integrating Twilio API for SMS messaging and Flask for web server. Features include AI risk assessment, message scheduling, and real-time message status updates.',
     points: [],
     tech: ['Python', 'Twilio', 'Streamlit'],
@@ -378,7 +378,7 @@ const ProjectsSection = ({ sectionRef }) => {
     <section ref={sectionRef} id="projects" className="min-h-screen py-20">
       <FadeIn>
         <h2 className="text-3xl font-bold mb-8 flex items-center">
-          <span className="text-teal-400 opacity-70 mr-2">03.</span> Some Things I've Built
+          <span className="text-teal-400 opacity-70 mr-2">03.</span> Projects
           <div className="h-px bg-gray-700 flex-grow ml-4"></div>
         </h2>
       </FadeIn>
@@ -395,9 +395,6 @@ const ProjectsSection = ({ sectionRef }) => {
       </div>
       
       {/* Other Projects Grid */}
-      <FadeIn>
-        <h3 className="text-2xl font-semibold text-center mb-8">Other Noteworthy Projects</h3>
-      </FadeIn>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {otherProjects.map((project, index) => (

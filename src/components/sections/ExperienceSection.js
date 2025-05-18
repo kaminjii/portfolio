@@ -180,7 +180,7 @@ const ExperienceSection = ({ sectionRef }) => {
     <section ref={sectionRef} id="experience" className="min-h-screen py-20">
       <FadeIn>
         <h2 className="text-3xl font-bold mb-8 flex items-center">
-          <span className="text-teal-400 opacity-70 mr-2">02.</span> Where I've Worked
+          <span className="text-teal-400 opacity-70 mr-2">02.</span> Experience
           <div className="h-px bg-gray-700 flex-grow ml-4"></div>
         </h2>
       </FadeIn>

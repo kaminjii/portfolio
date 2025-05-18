@@ -6,7 +6,7 @@ const GitHubSection = ({ sectionRef }) => {
   return (
     <section ref={sectionRef} id="github">
       <FadeIn>
-          <div className="grid grid-cols-1 gap-8">          
+          <div className="grid grid-cols-1 gap-8">   
             <FadeIn delay={200}>
               <GitHubActivity username="kaminjii" />
             </FadeIn>

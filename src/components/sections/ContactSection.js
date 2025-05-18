@@ -24,12 +24,22 @@ const ContactSection = ({ sectionRef }) => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormStatus({ ...formStatus, sending: true });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setFormStatus({ ...formStatus, sending: true });
 
-    // Simulate form submission
-    setTimeout(() => {
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formState),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
       setFormStatus({ sending: false, sent: true, error: false });
       setFormState({ name: '', email: '', message: '' });
       
@@ -37,8 +47,14 @@ const ContactSection = ({ sectionRef }) => {
       setTimeout(() => {
         setFormStatus({ sending: false, sent: false, error: false });
       }, 5000);
-    }, 1500);
-  };
+    } else {
+      throw new Error(data.error || 'Failed to send message');
+    }
+  } catch (error) {
+    console.error('Error sending message:', error);
+    setFormStatus({ sending: false, sent: false, error: true });
+  }
+};
 
   // Handle input focus and blur for floating labels
   const handleFocus = (field) => {
@@ -53,7 +69,7 @@ const ContactSection = ({ sectionRef }) => {
     <section ref={sectionRef} id="contact" className="min-h-screen py-20 flex flex-col justify-center">
       <FadeIn>
         <h2 className="text-3xl font-bold mb-8 flex items-center">
-          <span className="text-teal-400 opacity-70 mr-2">04.</span> Get In Touch
+          <span className="text-teal-400 opacity-70 mr-2">04.</span> Contact
           <div className="h-px bg-gray-700 flex-grow ml-4"></div>
         </h2>
       </FadeIn>
@@ -63,7 +79,7 @@ const ContactSection = ({ sectionRef }) => {
           <div className="space-y-6">
             <h3 className="text-2xl font-bold text-gray-100">Let's Connect</h3>
             <p className="text-gray-300">
-              I'm currently looking for new opportunities. Whether you have a question or just want to say hi,
+              I'm always looking for new opportunities. Whether you have a question or just want to say hi,
               I'll try my best to get back to you!
             </p>
             

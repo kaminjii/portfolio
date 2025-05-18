@@ -170,6 +170,7 @@ const PerformanceDashboard = () => {
                 </div>
               </div>
               <div className="mb-1"><span className="text-teal-400">├─</span> Footer</div>
+              <div><span className="text-teal-400">└─</span> StickyThemeToggle</div>
             </div>
           </div>
         </div>
