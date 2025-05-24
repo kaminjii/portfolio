@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../../app/ThemeContext';
 
 const FadeIn = ({ children, delay = 0, direction = 'up', className = '' }) => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {

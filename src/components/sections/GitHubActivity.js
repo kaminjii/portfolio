@@ -3,12 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { GitBranch, GitPullRequest, Star, GitCommit, Clock } from 'lucide-react';
 import FadeIn from '../animations/FadeIn';
+import { useTheme } from '../../app/ThemeContext';
+import useThemeClasses, { cx } from '../../app/ThemeUtils';
 
 const GitHubActivity = ({ username = 'kaminjii' }) => {
   const [activities, setActivities] = useState([]);
   const [repos, setRepos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { theme } = useTheme();
+  const classes = useThemeClasses();
 
   useEffect(() => {
     const fetchGitHubData = async () => {
@@ -106,7 +110,10 @@ const GitHubActivity = ({ username = 'kaminjii' }) => {
   return (
     <div className="py-4 rounded-lg">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-bold text-white">Latest GitHub Activity</h3>
+        <h3 className={cx(
+          "text-xl font-bold",
+          theme === 'dark' ? "text-white" : "text-gray-900"
+        )}>Latest GitHub Activity</h3>
         <a 
           href={`https://github.com/${username}`}
           target="_blank" 
@@ -120,11 +127,18 @@ const GitHubActivity = ({ username = 'kaminjii' }) => {
       {isLoading ? (
         <div className="grid place-items-center h-60">
           <div className="relative w-10 h-10">
-            <div className="absolute top-0 left-0 w-full h-full rounded-full border-2 border-transparent border-t-teal-400 animate-spin"></div>
+            <div className={cx(
+              "absolute top-0 left-0 w-full h-full rounded-full border-2 border-transparent border-t-teal-400 animate-spin"
+            )}></div>
           </div>
         </div>
       ) : error ? (
-        <div className="bg-red-900/20 border border-red-400 text-red-400 p-4 rounded-lg">
+        <div className={cx(
+          "border p-4 rounded-lg",
+          theme === 'dark' 
+            ? "bg-red-900/20 border-red-400 text-red-400" 
+            : "bg-red-100 border-red-400 text-red-600"
+        )}>
           {error}
         </div>
       ) : (
@@ -138,16 +152,30 @@ const GitHubActivity = ({ username = 'kaminjii' }) => {
                     href={activity.url}
                     target="_blank"
                     rel="noopener noreferrer" 
-                    className="flex gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-800/80 border border-gray-700 transition-colors duration-200"
+                    className={cx(
+                      "flex gap-3 p-3 rounded-lg border transition-colors duration-200",
+                      theme === 'dark' 
+                        ? "bg-gray-800/50 hover:bg-gray-800/80 border-gray-700" 
+                        : "bg-white hover:bg-gray-50 border-gray-200"
+                    )}
                   >
                     <div className="text-teal-400 mt-1">
                       {getActivityIcon(activity.type)}
                     </div>
                     <div className="flex-1">
-                      <p className="text-gray-300 mb-1">
-                        <span className="font-medium text-white">{activity.repo}</span>: {truncateText(activity.message)}
+                      <p className={cx(
+                        "mb-1",
+                        theme === 'dark' ? "text-gray-300" : "text-gray-700"
+                      )}>
+                        <span className={cx(
+                          "font-medium",
+                          theme === 'dark' ? "text-white" : "text-gray-900"
+                        )}>{activity.repo}</span>: {truncateText(activity.message)}
                       </p>
-                      <p className="text-xs text-gray-400 flex items-center">
+                      <p className={cx(
+                        "text-xs flex items-center",
+                        theme === 'dark' ? "text-gray-400" : "text-gray-500"
+                      )}>
                         <Clock size={12} className="mr-1" /> {formatRelativeTime(activity.date)}
                       </p>
                     </div>
@@ -155,7 +183,10 @@ const GitHubActivity = ({ username = 'kaminjii' }) => {
                 </FadeIn>
               ))
             ) : (
-              <div className="text-center text-gray-400">No recent activity found</div>
+              <div className={cx(
+                "text-center",
+                theme === 'dark' ? "text-gray-400" : "text-gray-500"
+              )}>No recent activity found</div>
             )}
           </div>
         </>

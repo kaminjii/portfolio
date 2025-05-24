@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Header from './Header';
 import ParticleBackground from './ParticleBackground';
 import FadeIn from './animations/FadeIn';
@@ -10,6 +11,9 @@ import ProjectsSection from './sections/ProjectsSection';
 import ExperienceSection from './sections/ExperienceSection';
 import ContactSection from './sections/ContactSection';
 import Footer from './Footer';
+import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../app/ThemeContext';
+import useThemeClasses, { cx } from '../app/ThemeUtils';
 import '../app/globals.css';
 import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiJenkins, SiDocker, SiKubernetes, SiGraphql, SiRedux, SiSass, SiWebpack, SiPytest, SiTailwindcss, SiNextdotjs, SiIntellijidea, SiXcode, SiExpo, SiApachemaven, SiJunit5, SiJest, SiGithub } from 'react-icons/si';
 import { BiLogoAws, BiLogoJava } from "react-icons/bi";
@@ -21,38 +25,46 @@ import PerformanceDashboard from './sections/PerformanceDashboard';
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [showHiddenTech, setShowHiddenTech] = useState(false);
+  const { theme } = useTheme();
   
-  const sections = ['home', 'about', 'experience', 'projects', 'contact'];
-  const sectionRefs = {
-    home: useRef(null),
-    about: useRef(null),
-    experience: useRef(null),
-    projects: useRef(null),
-    contact: useRef(null)
-  };
+  const sections = useMemo(() => ['home', 'about', 'experience', 'projects', 'contact'], []);
+  
+  // Create refs individually
+  const homeRef = useRef(null);
+  const aboutRef = useRef(null);
+  const experienceRef = useRef(null);
+  const projectsRef = useRef(null);
+  const contactRef = useRef(null);
+  
+  // Memoize the refs object
+  const sectionRefs = useMemo(() => ({
+    home: homeRef,
+    about: aboutRef,
+    experience: experienceRef,
+    projects: projectsRef,
+    contact: contactRef
+  }), [homeRef, aboutRef, experienceRef, projectsRef, contactRef]);
 
-  // Handle scroll to detect active section
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
-      
-      for (const section of sections) {
-        const element = sectionRefs[section].current;
-        if (!element) continue;
-        
-        const { offsetTop, offsetHeight } = element;
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-          setActiveSection(section);
-          break;
-        }
-      }
-    };
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + 100;
     
+    for (const section of sections) {
+      const element = sectionRefs[section].current;
+      if (!element) continue;
+      
+      const { offsetTop, offsetHeight } = element;
+      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+        setActiveSection(section);
+        break;
+      }
+    }
+  }, [sections, sectionRefs]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sections]);
+  }, [handleScroll]);
 
-  // Scroll to section
   const scrollToSection = (section) => {
     const element = sectionRefs[section].current;
     if (element) {
@@ -74,7 +86,7 @@ const App = () => {
     'React.js': <SiReact className="text-blue-400" />,
     'Node.js': <SiNodedotjs className="text-green-400" />,
     'Express.js': <SiNodedotjs className="text-green-400" />,
-    'Next.js': <SiNextdotjs className="text-gray-400" />,
+    'Next.js': <SiNextdotjs className={theme === 'dark' ? "text-gray-400" : "text-gray-600"} />,
     'TailwindCSS': <SiTailwindcss className="text-teal-400" />,
     'Swift/SwiftUI': <SiSwift className="text-amber-600" />,
     'HTML/CSS': <SiSass className="text-orange-400" />,
@@ -82,11 +94,11 @@ const App = () => {
     'AWS': <BiLogoAws className="text-orange-500" />,
     'Jenkins': <SiJenkins className="text-red-400" />,
     'Firebase': <SiFirebase className="text-yellow-500" />,
-    'Git/GitHub': <SiGithub className="text-gray-400" />,
+    'Git/GitHub': <SiGithub className={theme === 'dark' ? "text-gray-400" : "text-gray-600"} />,
     'VSCode': <VscVscode className="text-sky-400" />,
     'IntelliJ': <SiIntellijidea className="text-blue-500" />,
     'XCode': <SiXcode className="text-sky-500" />,
-    'Expo': <SiExpo className="text-gray-400" />,
+    'Expo': <SiExpo className={theme === 'dark' ? "text-gray-400" : "text-gray-600"} />,
     'Maven': <SiApachemaven className="text-rose-700" />,
     'JUnit': <SiJunit5 className="text-red-500" />,
     'Pytest': <SiPytest className="text-cyan-400" />,
@@ -105,7 +117,10 @@ const App = () => {
   ];
 
   return (
-    <div className="bg-gray-900 text-gray-100 min-h-screen relative">
+    <div className={cx(
+      "min-h-screen relative",
+      theme === 'dark' ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"
+    )}>
       <CustomCursor />
       <ParticleBackground />
       
@@ -119,27 +134,34 @@ const App = () => {
         {/* Home Section */}
         <section ref={sectionRefs.home} id="home" className="min-h-screen flex flex-col justify-center py-20">
           
-          {/* <Hero /> */}
-          
           <FadeIn delay={100}>
             <p className="text-teal-400 mb-4 font-mono">Hi, my name is</p>
           </FadeIn>
           
           <FadeIn delay={200}>
-            <h1 className="text-5xl sm:text-7xl font-bold text-gray-100 mb-4">Kaitlin Wood</h1>
+            <h1 className={cx(
+              "text-5xl sm:text-7xl font-bold mb-4",
+              theme === 'dark' ? "text-gray-100" : "text-gray-900"
+            )}>Kaitlin Wood</h1>
           </FadeIn>
           
           <FadeIn delay={300}>
             <div className="h-auto">
-              <h2 className="text-4xl sm:text-6xl font-bold text-gray-400 typing-effect inline-block whitespace-nowrap leading-relaxed">
+              <h2 className={cx(
+                "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold typing-effect inline-block leading-relaxed",
+                theme === 'dark' ? "text-gray-400" : "text-gray-500"
+              )}>
                 I am a Software Engineer.
               </h2>
             </div>
           </FadeIn>
           
           <FadeIn delay={400}>
-            <p className="text-gray-300 max-w-xl mb-8">
-              Currently, I'm focused on building accessible, user-centered products and improving web development skills at  {' '}
+            <p className={cx(
+              "max-w-xl mb-8",
+              theme === 'dark' ? "text-gray-300" : "text-gray-600"
+            )}>
+              Currently, I&apos;m focused on building accessible, user-centered products and improving web development skills at {' '}
               <a href="#" className="text-teal-400 hover:underline link-underline">Mastercard</a>.
             </p>
           </FadeIn>
@@ -160,31 +182,43 @@ const App = () => {
           <FadeIn>
             <h2 className="text-3xl font-bold mb-8 flex items-center">
               <span className="text-teal-400 opacity-70 mr-2">01.</span> About Me
-              <div className="h-px bg-gray-700 flex-grow ml-4"></div>
+              <div className={cx(
+                "h-px flex-grow ml-4",
+                theme === 'dark' ? "bg-gray-700" : "bg-gray-300"
+              )}></div>
             </h2>
           </FadeIn>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
               <FadeIn delay={100}>
-                <p className="text-gray-300 mb-4">
-                  Hello! I'm Kaitlin, a software engineer with a passion for creating engaging digital experiences.
+                <p className={cx(
+                  "mb-4",
+                  theme === 'dark' ? "text-gray-300" : "text-gray-600"
+                )}>
+                  Hello! I&apos;m Kaitlin, a software engineer with a passion for creating engaging digital experiences.
                   I recently graduated from the University of Houston with a Bachelor of Science in Computer Science 
                   and a minor in Mathematics.
                 </p>
               </FadeIn>
               
               <FadeIn delay={200}>
-                <p className="text-gray-300 mb-4">
+                <p className={cx(
+                  "mb-4",
+                  theme === 'dark' ? "text-gray-300" : "text-gray-600"
+                )}>
                   My journey in tech began with building web applications and games, and has evolved into a career
-                  focused on creating efficient, user-friendly software solutions. I'm particularly interested in
+                  focused on creating efficient, user-friendly software solutions. I&apos;m particularly interested in
                   web development, mobile applications, and data visualization.
                 </p>
               </FadeIn>
               
               <FadeIn delay={300}>
-                <p className="text-gray-300 mb-6">
-                  Here are a few technologies I've been working with recently:
+                <p className={cx(
+                  "mb-6",
+                  theme === 'dark' ? "text-gray-300" : "text-gray-600"
+                )}>
+                  Here are a few technologies I&apos;ve been working with recently:
                 </p>
               </FadeIn>
               
@@ -197,9 +231,19 @@ const App = () => {
                         className="group relative overflow-hidden"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative p-3 border border-gray-800 rounded-md bg-gray-900/40 backdrop-blur-sm flex items-center hover:border-gray-700 transition-colors duration-300">
+                        <div className={cx(
+                          "relative p-3 border rounded-md backdrop-blur-sm flex items-center transition-colors duration-300",
+                          theme === 'dark' 
+                            ? "border-gray-800 bg-gray-900/40 hover:border-gray-700" 
+                            : "border-gray-200 bg-white/40 hover:border-gray-300"
+                        )}>
                           <span className="mr-2">{techIcons[tech]}</span>
-                          <span className="text-gray-300 group-hover:text-white transition-colors">{tech}</span>
+                          <span className={cx(
+                            "transition-colors",
+                            theme === 'dark' 
+                              ? "text-gray-300 group-hover:text-white" 
+                              : "text-gray-700 group-hover:text-black"
+                          )}>{tech}</span>
                         </div>
                       </div>
                     ))}
@@ -212,9 +256,19 @@ const App = () => {
                           className="group relative overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="relative p-3 border border-gray-800 rounded-md bg-gray-900/40 backdrop-blur-sm flex items-center hover:border-gray-700 transition-colors duration-300">
+                          <div className={cx(
+                            "relative p-3 border rounded-md backdrop-blur-sm flex items-center transition-colors duration-300",
+                            theme === 'dark' 
+                              ? "border-gray-800 bg-gray-900/40 hover:border-gray-700" 
+                              : "border-gray-200 bg-white/40 hover:border-gray-300"
+                          )}>
                             <span className="mr-2">{techIcons[tech]}</span>
-                            <span className="text-gray-300 group-hover:text-white transition-colors">{tech}</span>
+                            <span className={cx(
+                              "transition-colors",
+                              theme === 'dark' 
+                                ? "text-gray-300 group-hover:text-white" 
+                                : "text-gray-700 group-hover:text-black"
+                            )}>{tech}</span>
                           </div>
                         </div>
                       ))}
@@ -233,11 +287,19 @@ const App = () => {
             <FadeIn delay={500} direction="left">
               <div className="group relative mx-auto max-w-xs">
                 <div className="border-2 border-teal-400 absolute inset-0 rounded translate-x-5 translate-y-5 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3"></div>
-                <div className="relative bg-teal-400/20 rounded overflow-hidden">
-                  <div className="absolute inset-0 bg-teal-400 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-0"></div>
-                  <img 
-                    src="headshot.png" 
+                <div className={cx(
+                  "relative rounded overflow-hidden",
+                  theme === 'dark' ? "bg-teal-400/20" : "bg-teal-400/10"
+                )}>
+                  <div className={cx(
+                    "absolute inset-0 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-0",
+                    theme === 'dark' ? "bg-teal-400" : "bg-teal-300"
+                  )}></div>
+                  <Image 
+                    src="/headshot.png" 
                     alt="Kaitlin Wood" 
+                    width={300}
+                    height={400}
                     className="relative z-10 mx-auto transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
@@ -252,6 +314,7 @@ const App = () => {
         {/* Projects Section */}
         <ProjectsSection sectionRef={sectionRefs.projects} />
 
+        {/* GitHub Section */}
         <GitHubSection sectionRef={sectionRefs.github} />
         
         {/* Contact Section */}
@@ -259,6 +322,9 @@ const App = () => {
       </main>
       
       <Footer />
+
+      {/* Theme Toggle Button */}
+      <ThemeToggle />
 
       <PerformanceDashboard />
     </div>

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../app/ThemeContext';
+import useThemeClasses, { cx } from '../app/ThemeUtils';
 
 const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const { theme } = useTheme();
+  const classes = useThemeClasses();
   
   // Handle scroll to top button visibility
   useEffect(() => {
@@ -26,13 +30,21 @@ const Footer = () => {
   };
   
   return (
-    <footer className="bg-gray-900 border-t border-gray-800 pt-10 pb-6 relative">
+    <footer className={cx(
+      "pt-10 pb-6 relative border-t",
+      theme === 'dark' 
+        ? "bg-gray-900 border-gray-800" 
+        : "bg-gray-50 border-gray-200"
+    )}>
       {/* Scroll to top button */}
       <div className='flex justify-end items-right pr-10'>
         <button 
           onClick={scrollToTop}
-          className={`p-3 rounded-full bg-teal-500/20 border border-teal-400 text-teal-400 transition-all duration-300 z-10
-                    ${showScrollTop ? 'opacity-100 transform-none' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+          className={cx(
+            "p-3 rounded-full border border-teal-400 text-teal-400 transition-all duration-300 z-10",
+            theme === 'dark' ? "bg-teal-500/20" : "bg-teal-500/10",
+            showScrollTop ? 'opacity-100 transform-none' : 'opacity-0 translate-y-10 pointer-events-none'
+          )}
           aria-label="Scroll to top"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -46,7 +58,10 @@ const Footer = () => {
         <div className="flex space-x-6">
           <a 
             href="mailto:wood.kaitlin3@gmail.com" 
-            className="text-gray-400 hover:text-teal-400 transition-colors transform hover:-translate-y-1 duration-200"
+            className={cx(
+              "transition-colors transform hover:-translate-y-1 duration-200",
+              theme === 'dark' ? "text-gray-400 hover:text-teal-400" : "text-gray-500 hover:text-teal-400"
+            )}
             aria-label="Email"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,7 +72,10 @@ const Footer = () => {
             href="https://linkedin.com/in/kaitlinwood03" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="text-gray-400 hover:text-teal-400 transition-colors transform hover:-translate-y-1 duration-200"
+            className={cx(
+              "transition-colors transform hover:-translate-y-1 duration-200",
+              theme === 'dark' ? "text-gray-400 hover:text-teal-400" : "text-gray-500 hover:text-teal-400"
+            )}
             aria-label="LinkedIn"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -68,7 +86,10 @@ const Footer = () => {
             href="https://github.com/kaminjii" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="text-gray-400 hover:text-teal-400 transition-colors transform hover:-translate-y-1 duration-200"
+            className={cx(
+              "transition-colors transform hover:-translate-y-1 duration-200",
+              theme === 'dark' ? "text-gray-400 hover:text-teal-400" : "text-gray-500 hover:text-teal-400"
+            )}
             aria-label="GitHub"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -79,13 +100,24 @@ const Footer = () => {
       </div>
       
       {/* Copyright */}
-      <div className="text-center text-gray-400 text-sm">
+      <div className={cx(
+        "text-center text-sm",
+        theme === 'dark' ? "text-gray-400" : "text-gray-500"
+      )}>
         <p className="mb-2">Designed & Built by Kaitlin Wood</p>
         <div className="group relative inline-block">
           <p>&copy; {new Date().getFullYear()} - All rights reserved</p>
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max p-2 bg-gray-800 text-teal-300 text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+          <div className={cx(
+            "absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max p-2 text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300",
+            theme === 'dark' 
+              ? "bg-gray-800 text-teal-300" 
+              : "bg-gray-100 text-teal-500"
+          )}>
             Built with React & TailwindCSS
-            <div className="absolute left-1/2 -translate-x-1/2 top-full w-2 h-2 bg-gray-800 rotate-45"></div>
+            <div className={cx(
+              "absolute left-1/2 -translate-x-1/2 top-full w-2 h-2 rotate-45",
+              theme === 'dark' ? "bg-gray-800" : "bg-gray-100"
+            )}></div>
           </div>
         </div>
       </div>

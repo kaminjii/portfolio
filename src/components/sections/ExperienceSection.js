@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import FadeIn from '../animations/FadeIn';
+import { useTheme } from '../../app/ThemeContext';
+import useThemeClasses, { cx } from '../../app/ThemeUtils';
 
-// Experience data from resume
 const experienceData = [
   {
     id: 'mastercard',
@@ -43,12 +44,12 @@ const experienceData = [
   }
 ];
 
-// Experience item with timeline
-const ExperienceItem = ({ experience, delay, isActive, onClick }) => {
+const ExperienceItem = ({ experience, delay, isActive, onClick, theme }) => {
   const itemRef = useRef(null);
   
-  // Add useEffect for entrance animation
   useEffect(() => {
+    const currentRef = itemRef.current; 
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -59,13 +60,13 @@ const ExperienceItem = ({ experience, delay, isActive, onClick }) => {
       { threshold: 0.2 }
     );
     
-    if (itemRef.current) {
-      observer.observe(itemRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
     
     return () => {
-      if (itemRef.current) {
-        observer.unobserve(itemRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -74,23 +75,54 @@ const ExperienceItem = ({ experience, delay, isActive, onClick }) => {
     <FadeIn delay={delay}>
       <div 
         ref={itemRef}
-        className={`relative pl-8 pb-8 border-l ${isActive ? 'border-teal-400' : 'border-gray-700'} group cursor-pointer opacity-0`}
+        className={cx(
+          "relative pl-8 pb-8 border-l group cursor-pointer opacity-0",
+          isActive 
+            ? "border-teal-400" 
+            : theme === 'dark' ? "border-gray-700" : "border-gray-300"
+        )}
         onClick={onClick}
         style={{ animationFillMode: 'forwards', animationDuration: '0.5s' }}
       >
-        <div className={`absolute left-0 w-3 h-3 -translate-x-1/2 rounded-full transition-all duration-300 ${isActive ? 'bg-teal-400 scale-125' : 'bg-gray-700 group-hover:bg-gray-500'}`}></div>
-        <div className={`transition-all duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
+        <div className={cx(
+          "absolute left-0 w-3 h-3 -translate-x-1/2 rounded-full transition-all duration-300",
+          isActive 
+            ? "bg-teal-400 scale-125" 
+            : theme === 'dark' 
+              ? "bg-gray-700 group-hover:bg-gray-500" 
+              : "bg-gray-300 group-hover:bg-gray-400"
+        )}></div>
+        <div className={cx(
+          "transition-all duration-300",
+          isActive ? "translate-x-1" : "group-hover:translate-x-1"
+        )}>
           <div className="flex flex-col sm:flex-row sm:justify-between mb-1">
-            <h3 className="text-lg font-medium text-white">
-              {experience.title} @ <span className={isActive ? 'text-teal-400' : 'text-gray-400 group-hover:text-teal-300'}>
+            <h3 className={cx(
+              "text-lg font-medium",
+              theme === 'dark' ? "text-white" : "text-gray-900"
+            )}>
+              {experience.title} @ <span className={cx(
+                isActive 
+                  ? "text-teal-400" 
+                  : theme === 'dark' 
+                    ? "text-gray-400 group-hover:text-teal-300" 
+                    : "text-gray-500 group-hover:text-teal-500"
+              )}>
                 {experience.company}
               </span>
             </h3>
-            <span className="text-gray-400 text-sm">{experience.period}</span>
+            <span className={theme === 'dark' ? "text-gray-400 text-sm" : "text-gray-500 text-sm"}>
+              {experience.period}
+            </span>
           </div>
-          <p className="text-sm text-gray-400 mb-2">{experience.location}</p>
+          <p className={theme === 'dark' ? "text-sm text-gray-400 mb-2" : "text-sm text-gray-500 mb-2"}>
+            {experience.location}
+          </p>
           {isActive && (
-            <ul className="text-gray-300 space-y-2 mt-4">
+            <ul className={cx(
+              "space-y-2 mt-4",
+              theme === 'dark' ? "text-gray-300" : "text-gray-600"
+            )}>
               {experience.description.map((item, index) => (
                 <li key={index} className="flex items-start">
                   <span className="text-teal-400 mr-2 mt-1">▹</span>
@@ -105,12 +137,10 @@ const ExperienceItem = ({ experience, delay, isActive, onClick }) => {
   );
 };
 
-// Tab-style experience component
-const TabExperience = () => {
+const TabExperience = ({ theme }) => {
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef(null);
   
-  // Add hover effect to tabs
   const handleTabHover = (e) => {
     const tabRect = e.currentTarget.getBoundingClientRect();
     const offsetY = (e.clientY - tabRect.top - tabRect.height / 2) / 10;
@@ -131,10 +161,15 @@ const TabExperience = () => {
             onClick={() => setActiveTab(index)}
             onMouseMove={handleTabHover}
             onMouseLeave={handleTabLeave}
-            className={`py-3 px-4 text-left border-b-2 md:border-b-0 md:border-l-2 snap-start min-w-max transition-all duration-300
-                       ${activeTab === index 
-                         ? 'text-teal-400 border-teal-400 bg-teal-900/10' 
-                         : 'text-gray-400 border-gray-700 hover:text-gray-100 hover:bg-gray-800/30'}`}
+            className={cx(
+              "py-3 px-4 text-left snap-start min-w-max transition-all duration-300",
+              "border-b-2 md:border-b-0 md:border-l-2", 
+              activeTab === index 
+                ? "text-teal-400 border-teal-400 bg-teal-900/10" 
+                : theme === 'dark'
+                  ? "text-gray-400 border-gray-700 hover:text-gray-100 hover:bg-gray-800/30"
+                  : "text-gray-500 border-gray-200 hover:text-gray-900 hover:bg-gray-100/60"
+            )}
             style={{ transformOrigin: 'center left' }}
           >
             {exp.company}
@@ -147,17 +182,26 @@ const TabExperience = () => {
         {experienceData.map((exp, index) => (
           <div 
             key={exp.id}
-            className={`absolute w-full transition-all duration-500 ${
+            className={cx(
+              "absolute w-full transition-all duration-500", 
               activeTab === index 
-                ? 'opacity-100 translate-x-0' 
-                : 'opacity-0 translate-x-8 pointer-events-none'
-            }`}
+                ? "opacity-100 translate-x-0" 
+                : "opacity-0 translate-x-8 pointer-events-none"
+            )}
           >
-            <h3 className="text-xl font-medium text-white mb-1">
+            <h3 className={cx(
+              "text-xl font-medium mb-1",
+              theme === 'dark' ? "text-white" : "text-gray-900"
+            )}>
               {exp.title} <span className="text-teal-400">@ {exp.company}</span>
             </h3>
-            <p className="text-sm text-gray-400 mb-4">{exp.period}</p>
-            <ul className="text-gray-300 space-y-3">
+            <p className={theme === 'dark' ? "text-sm text-gray-400 mb-4" : "text-sm text-gray-500 mb-4"}>
+              {exp.period}
+            </p>
+            <ul className={cx(
+              "space-y-3",
+              theme === 'dark' ? "text-gray-300" : "text-gray-600"
+            )}>
               {exp.description.map((item, index) => (
                 <li key={index} className="flex items-start group">
                   <span className="text-teal-400 mr-2 mt-1 transition-transform duration-300 group-hover:translate-x-1">▹</span>
@@ -172,22 +216,26 @@ const TabExperience = () => {
   );
 };
 
-// Main Experience Section Component
 const ExperienceSection = ({ sectionRef }) => {
   const [activeExp, setActiveExp] = useState(0);
+  const { theme } = useTheme();
+  const classes = useThemeClasses();
   
   return (
     <section ref={sectionRef} id="experience" className="min-h-screen py-20">
       <FadeIn>
         <h2 className="text-3xl font-bold mb-8 flex items-center">
           <span className="text-teal-400 opacity-70 mr-2">02.</span> Experience
-          <div className="h-px bg-gray-700 flex-grow ml-4"></div>
+          <div className={cx(
+            "h-px flex-grow ml-4",
+            theme === 'dark' ? "bg-gray-700" : "bg-gray-300"
+          )}></div>
         </h2>
       </FadeIn>
       
       {/* Tab style for wide screens */}
       <div className="hidden md:block">
-        <TabExperience />
+        <TabExperience theme={theme} />
       </div>
       
       {/* Timeline style for mobile */}
@@ -199,6 +247,7 @@ const ExperienceSection = ({ sectionRef }) => {
             delay={index * 100}
             isActive={activeExp === index}
             onClick={() => setActiveExp(index)}
+            theme={theme}
           />
         ))}
       </div>

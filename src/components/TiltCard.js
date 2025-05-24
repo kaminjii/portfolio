@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 const TiltCard = ({ children, className = '', intensity = 10, perspective = 1000, glareOpacity = 0.2 }) => {
   const cardRef = useRef(null);
@@ -34,15 +34,15 @@ const TiltCard = ({ children, className = '', intensity = 10, perspective = 1000
     setIsHovered(true);
   };
   
-  // Get the transform style based on mouse position
-  const getTransform = () => {
+  // Get the transform style based on mouse position - memoized with useCallback
+  const getTransform = useCallback(() => {
     if (!isHovered) return 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
     
     const rotateX = position.y * intensity * -1; // Invert Y axis for natural tilt
     const rotateY = position.x * intensity;
     
     return `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-  };
+  }, [isHovered, position.x, position.y, intensity, perspective]);
   
   // Calculate shine gradient position
   const getGlareStyle = () => {
@@ -63,7 +63,7 @@ const TiltCard = ({ children, className = '', intensity = 10, perspective = 1000
     if (!cardRef.current) return;
     
     cardRef.current.style.transform = getTransform();
-  }, [position, isHovered]);
+  }, [getTransform]);
   
   return (
     <div 

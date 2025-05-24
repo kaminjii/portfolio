@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from '../app/ThemeContext';
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
+  const { theme } = useTheme();
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -28,7 +30,7 @@ const ParticleBackground = () => {
     
     window.addEventListener('mousemove', handleMouseMove);
     
-    // Particle class
+    // Particle class with theme-aware colors
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -37,7 +39,8 @@ const ParticleBackground = () => {
         this.baseSize = this.size;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = '#0d9488';
+        // Use appropriate particle color based on theme
+        this.color = theme === 'dark' ? '#0d9488' : '#14b8a6';
         this.density = Math.random() * 30 + 1;
       }
       
@@ -96,7 +99,6 @@ const ParticleBackground = () => {
     
     // Animation loop
     const animate = () => {
-      console.log("animating...")
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       for (let i = 0; i < particlesArray.length; i++) {
@@ -111,7 +113,10 @@ const ParticleBackground = () => {
           
           if (distance < 140) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(13, 148, 136, ${0.15 - distance/1000})`;
+            const strokeColor = theme === 'dark' 
+              ? `rgba(13, 148, 136, ${0.15 - distance/1000})` 
+              : `rgba(20, 184, 166, ${0.15 - distance/1000})`;
+            ctx.strokeStyle = strokeColor;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
             ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -130,7 +135,7 @@ const ParticleBackground = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [theme]); // Re-run effect when theme changes
   
   return (
     <canvas 
