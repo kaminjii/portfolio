@@ -13,9 +13,9 @@ const experienceData = [
     location: 'St. Louis, MO',
     period: 'February 2025 – Present',
     description: [
-      'Recently started position focused on developing and maintaining financial technology solutions.',
-      'Working with modern web technologies to create secure, scalable applications.',
-      'Collaborating with cross-functional teams to deliver high-quality software products.'
+      'Built accessible UI components with ARIA attributes and keyboard navigation, increasing usability score',
+      ' Implemented robust test coverage during JS to TSX migration, improving overall code coverage to 98%',
+      'Optimized CI/CD Jenkins pipeline, decreasing build times by 35% while automating deployment processes'
     ]
   },
   {
