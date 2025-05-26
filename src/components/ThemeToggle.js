@@ -8,77 +8,63 @@ import useThemeClasses, { cx } from '../app/ThemeUtils';
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
   const classes = useThemeClasses();
   
-  const handleClick = (e) => {
-    const button = e.currentTarget;
-    const circle = document.createElement('span');
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
-    
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${e.clientX - button.offsetLeft - diameter / 2}px`;
-    circle.style.top = `${e.clientY - button.offsetTop - diameter / 2}px`;
-    circle.classList.add('ripple');
-    
-    const ripple = button.querySelector('.ripple');
-    if (ripple) {
-      ripple.remove();
-    }
-    
-    button.appendChild(circle);
-    
-    setIsAnimating(true);
-    
-    setTimeout(() => {
-      toggleTheme();
-      
-      setTimeout(() => {
-        setIsAnimating(false);
-      }, 500);
-    }, 150);
-  };
-
-  const buttonClasses = cx(
-    "p-3 rounded-full shadow-lg border transition-all duration-300 overflow-hidden",
-    theme === 'light' 
-      ? "bg-white text-blue-400 hover:bg-gray-50 border-gray-200" 
-      : "bg-gray-800 text-teal-400 hover:bg-gray-700 border-gray-700",
-    isHovered ? "scale-110" : "scale-100",
-    isAnimating ? "animate-pulse" : ""
-  );
-  
   return (
-    <div className="fixed bottom-6 left-6 z-50 p-0">
+    <div className="fixed bottom-8 left-8 z-50">
       <button
-        onClick={handleClick}
+        onClick={toggleTheme}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={buttonClasses}
+        className={cx(
+          "group relative p-4 rounded-full transition-all duration-500 overflow-hidden",
+          theme === 'dark' 
+            ? "bg-stone-800/80 hover:bg-stone-700/80 backdrop-blur-sm" 
+            : "bg-white/80 hover:bg-stone-100/80 backdrop-blur-sm shadow-lg",
+          isHovered ? "scale-110" : "scale-100"
+        )}
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
       >
-        <div className="relative">
-          {/* Sun icon for light mode */}
+        {/* Background gradient on hover */}
+        <div 
+          className={cx(
+            "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+            "bg-gradient-to-br from-blue-400/20 to-blue-400/20"
+          )}
+        />
+        
+        {/* Icon container */}
+        <div className="relative w-5 h-5">
+          {/* Sun icon */}
           <Sun 
-            size={24} 
+            size={20} 
             className={cx(
-              "transition-all duration-500",
+              "absolute inset-0 transition-all duration-500",
               theme === 'light' 
-                ? "rotate-0 opacity-100 scale-100" 
-                : "rotate-90 opacity-0 scale-0 absolute top-0 left-0"
+                ? "opacity-100 rotate-0 text-blue-600" 
+                : "opacity-0 rotate-90 text-blue-600"
             )}
           />
           
-          {/* Moon icon for dark mode */}
+          {/* Moon icon */}
           <Moon 
-            size={24} 
+            size={20} 
             className={cx(
-              "transition-all duration-500",
+              "absolute inset-0 transition-all duration-500",
               theme === 'dark' 
-                ? "rotate-0 opacity-100 scale-100" 
-                : "-rotate-90 opacity-0 scale-0 absolute top-0 left-0"
+                ? "opacity-100 rotate-0 text-blue-400" 
+                : "opacity-0 -rotate-90 text-blue-400"
             )}
           />
+        </div>
+        
+        {/* Tooltip */}
+        <div className={cx(
+          "absolute left-full ml-3 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap pointer-events-none transition-all duration-300",
+          theme === 'dark' ? "bg-stone-700 text-stone-200" : "bg-stone-800 text-stone-100",
+          isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
+        )}>
+          {theme === 'dark' ? 'Light mode' : 'Dark mode'}
         </div>
       </button>
     </div>

@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowRight, Coffee, Sparkles, Heart, Wind, Droplets, Sun } from 'lucide-react';
 import Header from './Header';
-import ParticleBackground from './ParticleBackground';
+import OrganicBackground from './OrganicBackground';
 import FadeIn from './animations/FadeIn';
-import CustomCursor from './animations/CustomCursor';
+import SmoothCursor from './animations/SmoothCursor';
 import ProjectsSection from './sections/ProjectsSection';
 import ExperienceSection from './sections/ExperienceSection';
 import ContactSection from './sections/ContactSection';
@@ -15,43 +14,49 @@ import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../app/ThemeContext';
 import useThemeClasses, { cx } from '../app/ThemeUtils';
 import '../app/globals.css';
-import { SiJavascript, SiReact, SiNodedotjs, SiTypescript, SiFirebase, SiPython, SiSwift, SiMysql, SiJenkins, SiDocker, SiKubernetes, SiGraphql, SiRedux, SiSass, SiWebpack, SiPytest, SiTailwindcss, SiNextdotjs, SiIntellijidea, SiXcode, SiExpo, SiApachemaven, SiJunit5, SiJest, SiGithub } from 'react-icons/si';
-import { BiLogoAws, BiLogoJava } from "react-icons/bi";
-import { PiFileCpp } from "react-icons/pi";
-import { VscAzure, VscVscode } from "react-icons/vsc";
-import GitHubSection from './sections/GitHubSection';
-import PerformanceDashboard from './sections/PerformanceDashboard';
+import { PiFlowerLotus } from 'react-icons/pi';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
-  const [showHiddenTech, setShowHiddenTech] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { theme } = useTheme();
-  
+  const classes = useThemeClasses();
+
   const sections = useMemo(() => ['home', 'about', 'experience', 'projects', 'contact'], []);
-  
+
   // Create refs individually
   const homeRef = useRef(null);
   const aboutRef = useRef(null);
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
-  
+
   // Memoize the refs object
   const sectionRefs = useMemo(() => ({
     home: homeRef,
     about: aboutRef,
     experience: experienceRef,
     projects: projectsRef,
-    contact: contactRef
-  }), [homeRef, aboutRef, experienceRef, projectsRef, contactRef]);
+    contact: contactRef,
+  }), []);
+
+  // Track mouse position for parallax effects
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY + 100;
-    
+
     for (const section of sections) {
       const element = sectionRefs[section].current;
       if (!element) continue;
-      
+
       const { offsetTop, offsetHeight } = element;
       if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
         setActiveSection(section);
@@ -70,241 +75,324 @@ const App = () => {
     if (element) {
       window.scrollTo({
         top: element.offsetTop - 80,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
       setActiveSection(section);
     }
   };
 
-  const techIcons = {
-    'JavaScript': <SiJavascript className="text-yellow-400" />,
-    'TypeScript': <SiTypescript className="text-blue-500" />,
-    'Python': <SiPython className="text-blue-300" />,
-    'Java': <BiLogoJava className="text-red-500" />,
-    'C++': <PiFileCpp className="text-blue-400" />,
-    'SQL': <SiMysql className="text-cyan-600" />,
-    'React.js': <SiReact className="text-blue-400" />,
-    'Node.js': <SiNodedotjs className="text-green-400" />,
-    'Express.js': <SiNodedotjs className="text-green-400" />,
-    'Next.js': <SiNextdotjs className={theme === 'dark' ? "text-gray-400" : "text-gray-600"} />,
-    'TailwindCSS': <SiTailwindcss className="text-teal-400" />,
-    'Swift/SwiftUI': <SiSwift className="text-amber-600" />,
-    'HTML/CSS': <SiSass className="text-orange-400" />,
-    'Azure': <VscAzure className="text-blue-400" />,
-    'AWS': <BiLogoAws className="text-orange-500" />,
-    'Jenkins': <SiJenkins className="text-red-400" />,
-    'Firebase': <SiFirebase className="text-yellow-500" />,
-    'Git/GitHub': <SiGithub className={theme === 'dark' ? "text-gray-400" : "text-gray-600"} />,
-    'VSCode': <VscVscode className="text-sky-400" />,
-    'IntelliJ': <SiIntellijidea className="text-blue-500" />,
-    'XCode': <SiXcode className="text-sky-500" />,
-    'Expo': <SiExpo className={theme === 'dark' ? "text-gray-400" : "text-gray-600"} />,
-    'Maven': <SiApachemaven className="text-rose-700" />,
-    'JUnit': <SiJunit5 className="text-red-500" />,
-    'Pytest': <SiPytest className="text-cyan-400" />,
-    'Jest': <SiJest className="text-pink-900" />,
-  };
-
-  const mainTechnologies = [
-    'JavaScript', 'TypeScript', 'Python', 'React.js', 'Node.js', 
-    'SQL', 'AWS', 'Firebase', 'Swift/SwiftUI'
-  ];
-
-  const hiddenTechnologies = [
-    'TailwindCSS', 'Java', 'C++', 'Express.js', 'Next.js', 'HTML/CSS', 'Azure', 
-    'Jenkins', 'Git/GitHub', 'VSCode', 'IntelliJ', 'XCode', 
-    'Expo', 'Maven', 'JUnit', 'Pytest', 'Jest'
-  ];
-
   return (
     <div className={cx(
-      "min-h-screen relative",
-      theme === 'dark' ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"
+      "min-h-screen relative noise-texture",
+      theme === 'dark' ? "bg-slate-900 text-amber-100" : "bg-amber-50 text-slate-800"
     )}>
-      <CustomCursor />
-      <ParticleBackground />
-      
-      <Header 
-        activeSection={activeSection} 
-        sections={sections} 
-        scrollToSection={scrollToSection} 
+      <SmoothCursor />
+      <OrganicBackground />
+
+      <Header
+        activeSection={activeSection}
+        sections={sections}
+        scrollToSection={scrollToSection}
       />
-      
-      <main className="max-w-6xl mx-auto px-6 pt-28 pb-20">
+
+      <main className="relative z-10">
         {/* Home Section */}
-        <section ref={sectionRefs.home} id="home" className="min-h-screen flex flex-col justify-center py-20">
-          
-          <FadeIn delay={100}>
-            <p className="text-teal-400 mb-4 font-mono">Hi, my name is</p>
-          </FadeIn>
-          
-          <FadeIn delay={200}>
-            <h1 className={cx(
-              "text-5xl sm:text-7xl font-bold mb-4",
-              theme === 'dark' ? "text-gray-100" : "text-gray-900"
-            )}>Kaitlin Wood</h1>
-          </FadeIn>
-          
-          <FadeIn delay={300}>
-            <div className="h-auto">
-              <h2 className={cx(
-                "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold typing-effect inline-block leading-relaxed",
-                theme === 'dark' ? "text-gray-400" : "text-gray-500"
-              )}>
-                I am a Software Engineer.
-              </h2>
-            </div>
-          </FadeIn>
-          
-          <FadeIn delay={400}>
-            <p className={cx(
-              "max-w-xl mb-8",
-              theme === 'dark' ? "text-gray-300" : "text-gray-600"
-            )}>
-              Currently, I&apos;m focused on building accessible, user-centered products and improving web development skills at {' '}
-              <a href="#" className="text-teal-400 hover:underline link-underline">Mastercard</a>.
-            </p>
-          </FadeIn>
-          
-          <FadeIn delay={500}>
-            <button 
-              onClick={() => scrollToSection('projects')}
-              className="group flex items-center gap-2 border border-teal-400 text-teal-400 px-6 py-3 rounded hover:bg-teal-900/20 transition-all duration-300 button-hover-effect"
-            >
-              Check out my work 
-              <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={18} />
-            </button>
-          </FadeIn>
-        </section>
-        
-        {/* About Section */}
-        <section ref={sectionRefs.about} id="about" className="min-h-screen py-20">
-          <FadeIn>
-            <h2 className="text-3xl font-bold mb-8 flex items-center">
-              <span className="text-teal-400 opacity-70 mr-2">01.</span> About Me
-              <div className={cx(
-                "h-px flex-grow ml-4",
-                theme === 'dark' ? "bg-gray-700" : "bg-gray-300"
-              )}></div>
-            </h2>
-          </FadeIn>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2">
+        <section ref={sectionRefs.home} id="home" className="min-h-screen flex items-center relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="order-2 lg:order-1">
               <FadeIn delay={100}>
-                <p className={cx(
-                  "mb-4",
-                  theme === 'dark' ? "text-gray-300" : "text-gray-600"
-                )}>
-                  Hello! I&apos;m Kaitlin, a software engineer with a passion for creating engaging digital experiences.
-                  I recently graduated from the University of Houston with a Bachelor of Science in Computer Science 
-                  and a minor in Mathematics.
-                </p>
+                <div className="flex items-center gap-3 mb-8">
+                  <div className={cx(
+                    "w-14 h-14 rounded-full flex items-center justify-center animate-pulse-organic transition-all duration-300",
+                    theme === 'dark'? "bg-gradient-to-br from-red-500 to-orange-600 shadow-lg shadow-red-500/30" : "bg-gradient-to-br from-red-600 to-orange-500 shadow-lg shadow-red-600/30"
+                  )}>
+                    <PiFlowerLotus size={24} className={cx(theme === 'dark'? "text-amber-50" : "text-white")} />
+                  </div>
+                  <p className={cx(
+                    "font-medium text-lg",
+                    theme === 'dark'? "text-amber-300" : "text-red-700"
+                  )}>Hello, I'm</p>
+                </div>
               </FadeIn>
               
               <FadeIn delay={200}>
-                <p className={cx(
-                  "mb-4",
-                  theme === 'dark' ? "text-gray-300" : "text-gray-600"
+                <h1 className={cx(
+                  "text-6xl sm:text-7xl lg:text-8xl font-serif leading-[0.9] mb-6",
+                  theme === 'dark'? "text-amber-50" : "text-slate-900"
                 )}>
-                  My journey in tech began with building web applications and games, and has evolved into a career
-                  focused on creating efficient, user-friendly software solutions. I&apos;m particularly interested in
-                  web development, mobile applications, and data visualization.
-                </p>
+                  Kaitlin<br />
+                  <span className={cx(
+                    "font-medium",
+                    theme === 'dark'? "text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400" : "text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500"
+                  )}>Wood</span>
+                </h1>
               </FadeIn>
               
               <FadeIn delay={300}>
                 <p className={cx(
-                  "mb-6",
-                  theme === 'dark' ? "text-gray-300" : "text-gray-600"
+                  "text-xl sm:text-2xl mb-8 font-light italic",
+                  theme === 'dark'? "text-amber-200" : "text-slate-600"
                 )}>
-                  Here are a few technologies I&apos;ve been working with recently:
+                  Software Engineer crafting delightful digital experiences
                 </p>
               </FadeIn>
               
               <FadeIn delay={400}>
-                <div className="relative py-6">
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-                    {mainTechnologies.map((tech, index) => (
-                      <div 
-                        key={index} 
-                        className="group relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className={cx(
-                          "relative p-3 border rounded-md backdrop-blur-sm flex items-center transition-colors duration-300",
-                          theme === 'dark' 
-                            ? "border-gray-800 bg-gray-900/40 hover:border-gray-700" 
-                            : "border-gray-200 bg-white/40 hover:border-gray-300"
-                        )}>
-                          <span className="mr-2">{techIcons[tech]}</span>
-                          <span className={cx(
-                            "transition-colors",
-                            theme === 'dark' 
-                              ? "text-gray-300 group-hover:text-white" 
-                              : "text-gray-700 group-hover:text-black"
-                          )}>{tech}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {showHiddenTech && (
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mt-4">
-                      {hiddenTechnologies.map((tech, index) => (
-                        <div 
-                          key={index} 
-                          className="group relative overflow-hidden"
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className={cx(
-                            "relative p-3 border rounded-md backdrop-blur-sm flex items-center transition-colors duration-300",
-                            theme === 'dark' 
-                              ? "border-gray-800 bg-gray-900/40 hover:border-gray-700" 
-                              : "border-gray-200 bg-white/40 hover:border-gray-300"
-                          )}>
-                            <span className="mr-2">{techIcons[tech]}</span>
-                            <span className={cx(
-                              "transition-colors",
-                              theme === 'dark' 
-                                ? "text-gray-300 group-hover:text-white" 
-                                : "text-gray-700 group-hover:text-black"
-                            )}>{tech}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                <p className={cx(
+                  "text-lg mb-12 leading-relaxed",
+                  theme === 'dark'? "text-amber-300" : "text-slate-500"
+                )}>
+                  Currently building accessible, user-centered products at{' '}
+                  <span className={cx(
+                    "font-medium link-underline cursor-pointer",
+                    theme === 'dark'? "text-red-400 hover:text-orange-400" : "text-red-700 hover:text-orange-600"
+                  )}>
+                    Mastercard
+                  </span>
+                </p>
+              </FadeIn>
+              
+              <FadeIn delay={500}>
+                <div className="flex flex-wrap gap-4">
                   <button 
-                    onClick={() => setShowHiddenTech(!showHiddenTech)}
-                    className="mt-4 text-teal-400 hover:underline"
+                    onClick={() => scrollToSection('projects')}
+                    className={cx(
+                      "btn-oriental group flex items-center gap-3 px-8 py-3 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105",
+                      theme === 'dark' 
+                       ? "bg-gradient-to-br from-red-500 to-orange-600 text-white shadow-lg shadow-red-500/30 hover:shadow-red-400/40" 
+                        : "bg-gradient-to-br from-red-600 to-orange-500 text-white shadow-lg shadow-red-600/30 hover:shadow-red-500/40"
+                    )}
                   >
-                    {showHiddenTech ? 'Show Less' : 'Show More'}
+                    View my work
+                    <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
+                  </button>
+                  
+                  <button 
+                    onClick={() => scrollToSection('contact')}
+                    className={cx(
+                      "btn-oriental group flex items-center gap-3 px-8 py-3 rounded-full text-lg font-medium border-2 transition-all duration-300 transform hover:scale-105",
+                      theme === 'dark' 
+                       ? "border-red-500 text-amber-200 hover:bg-red-500/20 hover:text-amber-100 shadow-sm hover:shadow-red-500/20" 
+                        : "border-red-600 text-red-700 hover:bg-red-600/10 hover:text-red-600 shadow-sm hover:shadow-red-600/20"
+                    )}
+                  >
+                    Get in touch
                   </button>
                 </div>
               </FadeIn>
             </div>
             
-            <FadeIn delay={500} direction="left">
-              <div className="group relative mx-auto max-w-xs">
-                <div className="border-2 border-teal-400 absolute inset-0 rounded translate-x-5 translate-y-5 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3"></div>
-                <div className={cx(
-                  "relative rounded overflow-hidden",
-                  theme === 'dark' ? "bg-teal-400/20" : "bg-teal-400/10"
-                )}>
+            {/* Right Content */}
+            <div className="order-1 lg:order-2 relative flex justify-center items-center h-full">
+              <FadeIn delay={300} direction="right">
+                <div className="relative w-80 h-80 sm:w-96 sm:h-96 group">
+                  {/* Decorative blob - background */}
                   <div className={cx(
-                    "absolute inset-0 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-0",
-                    theme === 'dark' ? "bg-teal-400" : "bg-teal-300"
+                    "absolute -inset-8 blur-3xl animate-blob transition-all duration-1000 opacity-70 group-hover:opacity-100",
+                    theme === 'dark'? "bg-gradient-to-br from-red-600/30 to-orange-500/30" : "bg-gradient-to-br from-red-400/30 to-orange-300/30"
                   )}></div>
-                  <Image 
-                    src="/headshot.png" 
-                    alt="Kaitlin Wood" 
-                    width={300}
-                    height={400}
-                    className="relative z-10 mx-auto transition-transform duration-500 group-hover:scale-105"
-                  />
+                  
+                  {/* Main Bowl Structure */}
+                  <div className={cx(
+                    "relative w-full h-full rounded-full p-2 transform transition-all duration-500 group-hover:scale-105",
+                    theme === 'dark' 
+                     ? "bg-slate-800/50 shadow-2xl shadow-red-900/50 border-2 border-red-500/30" 
+                      : "bg-amber-100/50 shadow-2xl shadow-red-300/50 border-2 border-red-300/30"
+                  )}>
+                    {/* Inner Bowl Layer 1 */}
+                    <div className={cx(
+                      "w-full h-full rounded-full p-2 transform transition-all duration-500 group-hover:rotate-[5deg]",
+                      theme === 'dark'? "border border-orange-600/40" : "border border-orange-400/40"
+                    )}>
+                      {/* Inner Bowl Layer 2 (Content Holder) */}
+                      <div className={cx(
+                        "w-full h-full rounded-full flex flex-col items-center justify-center text-center p-6 transform transition-all duration-500 group-hover:-rotate-[5deg]",
+                        theme === 'dark' 
+                         ? "bg-slate-800/70 shadow-inner shadow-red-900/30 border border-red-700/50" 
+                          : "bg-amber-100/70 shadow-inner shadow-red-200/50 border border-red-400/50"
+                      )}>
+                        <Sun size={48} className={cx(
+                          "mb-4 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12",
+                          theme === 'dark'? "text-orange-400" : "text-orange-500"
+                        )} />
+                        <p className={cx(
+                          "text-sm font-light transition-opacity duration-300 group-hover:opacity-100 opacity-80",
+                          theme === 'dark'? "text-amber-300" : "text-slate-600"
+                        )}>
+                          Crafted with Care
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Floating decorative elements */}
+                  <div className={cx(
+                    "absolute -top-10 -right-10 w-24 h-24 rounded-full blur-2xl animate-float transition-all duration-500 group-hover:scale-125",
+                     theme === 'dark'? "bg-red-500/20" : "bg-red-300/20"
+                  )}></div>
+                  <div className={cx(
+                    "absolute -bottom-16 -left-16 w-32 h-32 rounded-full blur-2xl animate-float transition-all duration-500 group-hover:scale-125",
+                    theme === 'dark'? "bg-orange-500/20" : "bg-orange-300/20"
+                  )} style={{ animationDelay: '1.5s' }}></div>
+                   <Droplets size={28} className={cx(
+                    "absolute top-1/4 -left-12 transition-all duration-500 group-hover:translate-x-2 group-hover:text-red-400 opacity-50 group-hover:opacity-100",
+                    theme === 'dark'? "text-red-600" : "text-red-400"
+                  )} style={{ transform: 'rotate(-30deg)' }} />
+                   <Wind size={24} className={cx(
+                    "absolute bottom-1/4 -right-12 transition-all duration-500 group-hover:-translate-x-2 group-hover:text-orange-400 opacity-50 group-hover:opacity-100",
+                    theme === 'dark'? "text-orange-600" : "text-orange-400"
+                  )} style={{ transform: 'rotate(20deg)' }} />
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+          
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+            <FadeIn delay={800}>
+              <div className={cx(
+                "text-sm font-medium animate-bounce",
+                theme === 'dark'? "text-amber-500" : "text-slate-400"
+              )}>
+                <div className="flex flex-col items-center gap-2">
+                  <span>Scroll to explore</span>
+                  <div className="w-px h-12 bg-current opacity-40"></div>
                 </div>
               </div>
             </FadeIn>
+          </div>
+        </section>
+        
+        {/* About Section */}
+        <section ref={sectionRefs.about} id="about" className="py-32 relative">
+          <div className="max-w-6xl mx-auto px-6 sm:px-12">
+            <FadeIn>
+              <div className="mb-16">
+                <span className={cx(
+                  "font-medium text-sm uppercase tracking-wider",
+                  theme === 'dark'? "text-red-400" : "text-red-700"
+                )}>About</span>
+                <h2 className={cx(
+                  "text-5xl sm:text-6xl font-light mt-4",
+                  theme === 'dark'? "text-stone-100" : "text-stone-900"
+                )}>
+                  Crafting Stories Through Code
+                </h2>
+              </div>
+            </FadeIn>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              <div className="lg:col-span-2">
+                <FadeIn delay={100}>
+                  <p className={cx(
+                    "text-lg leading-relaxed mb-6",
+                    theme === 'dark'? "text-stone-300" : "text-stone-600"
+                  )}>
+                    Hello! I'm Kaitlin, a software engineer with a passion for creating engaging digital experiences
+                    that blend functionality with aesthetics. My journey in tech began with a fascination for how
+                    beautiful design and clean code can come together to solve real-world problems.
+                  </p>
+                </FadeIn>
+                
+                <FadeIn delay={200}>
+                  <p className={cx(
+                    "text-lg leading-relaxed mb-6",
+                    theme === 'dark'? "text-stone-300" : "text-stone-600"
+                  )}>
+                    I recently graduated from the University of Houston with a Bachelor of Science in Computer Science
+                    and a minor in Mathematics. This combination has given me a unique perspective on problem-solving,
+                    allowing me to approach challenges with both analytical rigor and creative thinking.
+                  </p>
+                </FadeIn>
+                
+                <FadeIn delay={300}>
+                  <p className={cx(
+                    "text-lg leading-relaxed mb-8",
+                    theme === 'dark'? "text-stone-300" : "text-stone-600"
+                  )}>
+                    When I'm not coding, you'll find me exploring local coffee shops, sketching interface ideas,
+                    or diving into the latest design trends. I believe that great software is not just about
+                    functionality—it's about creating experiences that delight and inspire.
+                  </p>
+                </FadeIn>
+                
+                <FadeIn delay={400}>
+                  <div className="flex items-center gap-4 mb-12">
+                    <Sparkles className={cx(theme === 'dark'? "text-red-400" : "text-red-700")} size={24} />
+                    <h3 className={cx(
+                      "text-2xl font-medium",
+                      theme === 'dark'? "text-stone-200" : "text-stone-800"
+                    )}>Skills & Technologies</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {['JavaScript', 'React', 'Node.js', 'CSS', 'HTML', 'Git'].map((skill, index) => (
+                      <div 
+                        key={skill}
+                        className={cx(
+                          "px-4 py-3 rounded-2xl text-center font-medium transition-all duration-300 hover:-translate-y-1",
+                          theme === 'dark' 
+                           ? "bg-slate-800/50 text-stone-300 hover:bg-slate-700" 
+                            : "bg-amber-100 text-stone-700 hover:bg-amber-200"
+                        )}
+                        style={{ animationDelay: `${index * 100}ms` }}
+                      >
+                        {skill}
+                      </div>
+                    ))}
+                  </div>
+                </FadeIn>
+              </div>
+              
+              <div className="relative">
+                <FadeIn delay={500} direction="left">
+                  <div className={cx(
+                    "sticky top-24 p-8 rounded-3xl",
+                    theme === 'dark'? "bg-slate-800/30 border border-slate-700/50" : "bg-amber-100/80 border border-amber-200/80"
+                  )}>
+                    <div className="flex items-center gap-3 mb-6">
+                      <Heart className={cx(theme === 'dark'? "text-red-400" : "text-red-700")} size={24} />
+                      <h3 className={cx(
+                        "text-xl font-medium",
+                        theme === 'dark'? "text-stone-200" : "text-stone-800"
+                      )}>What drives me</h3>
+                    </div>
+                    
+                    <ul className="space-y-4">
+                      <li className={cx(
+                        "flex items-start gap-3",
+                        theme === 'dark'? "text-stone-400" : "text-stone-600"
+                      )}>
+                        <span className={cx("mt-1", theme === 'dark'? "text-red-500" : "text-red-700")}>•</span>
+                        <span>Creating intuitive, accessible experiences for all users</span>
+                      </li>
+                      <li className={cx(
+                        "flex items-start gap-3",
+                        theme === 'dark'? "text-stone-400" : "text-stone-600"
+                      )}>
+                        <span className={cx("mt-1", theme === 'dark'? "text-red-500" : "text-red-700")}>•</span>
+                        <span>Bridging the gap between design and development</span>
+                      </li>
+                      <li className={cx(
+                        "flex items-start gap-3",
+                        theme === 'dark'? "text-stone-400" : "text-stone-600"
+                      )}>
+                        <span className={cx("mt-1", theme === 'dark'? "text-red-500" : "text-red-700")}>•</span>
+                        <span>Continuous learning and growth</span>
+                      </li>
+                      <li className={cx(
+                        "flex items-start gap-3",
+                        theme === 'dark'? "text-stone-400" : "text-stone-600"
+                      )}>
+                        <span className={cx("mt-1", theme === 'dark'? "text-red-500" : "text-red-700")}>•</span>
+                        <span>Building meaningful connections through technology</span>
+                      </li>
+                    </ul>
+                  </div>
+                </FadeIn>
+              </div>
+            </div>
           </div>
         </section>
         
@@ -313,9 +401,6 @@ const App = () => {
         
         {/* Projects Section */}
         <ProjectsSection sectionRef={sectionRefs.projects} />
-
-        {/* GitHub Section */}
-        <GitHubSection sectionRef={sectionRefs.github} />
         
         {/* Contact Section */}
         <ContactSection sectionRef={sectionRefs.contact} />
@@ -325,8 +410,6 @@ const App = () => {
 
       {/* Theme Toggle Button */}
       <ThemeToggle />
-
-      <PerformanceDashboard />
     </div>
   );
 };

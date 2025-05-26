@@ -17,36 +17,41 @@ const useThemeClasses = () => {
   
   return {
     // Text colors
-    text: getClass('text-gray-100', 'text-gray-900'),
-    textSecondary: getClass('text-gray-300', 'text-gray-600'),
-    textMuted: getClass('text-gray-400', 'text-gray-500'),
+    text: getClass('text-stone-100', 'text-stone-800'),
+    textSecondary: getClass('text-stone-300', 'text-stone-600'),
+    textMuted: getClass('text-stone-400', 'text-stone-500'),
     
     // Background colors
-    bg: getClass('bg-gray-900', 'bg-gray-50'),
-    bgSecondary: getClass('bg-gray-800', 'bg-white'),
-    bgTertiary: getClass('bg-gray-800/50', 'bg-gray-100'),
+    bg: getClass('bg-stone-950', 'bg-stone-50'),
+    bgSecondary: getClass('bg-stone-900', 'bg-white'),
+    bgTertiary: getClass('bg-stone-800/50', 'bg-stone-100'),
     
     // Border colors
-    border: getClass('border-gray-700', 'border-gray-200'),
-    borderLight: getClass('border-gray-800', 'border-gray-100'),
+    border: getClass('border-stone-700', 'border-stone-200'),
+    borderLight: getClass('border-stone-800', 'border-stone-100'),
     
     // Card styles
     card: getClass(
-      'bg-gray-800/30 border-gray-700', 
-      'bg-white border-gray-200 shadow-sm'
+      'bg-stone-900/30 border-stone-700', 
+      'bg-white border-stone-200 shadow-soft'
     ),
     
     // Button styles
     button: getClass(
-      'bg-gray-800 text-gray-200 hover:bg-gray-700',
-      'bg-gray-100 text-gray-800 hover:bg-gray-200'
+      'bg-stone-800 text-stone-200 hover:bg-stone-700',
+      'bg-stone-100 text-stone-800 hover:bg-stone-200'
     ),
     
-    // Accent (teal) remains consistent in both modes
-    accent: 'text-teal-400',
-    accentBg: 'bg-teal-400',
-    accentBgLight: getClass('bg-teal-900/20', 'bg-teal-100'),
-    accentBorder: 'border-teal-400',
+    // Accent colors - warm tones
+    accent: 'text-blue-600',
+    accentDark: 'text-blue-700',
+    accentBg: 'bg-blue-600',
+    accentBgLight: getClass('bg-blue-900/20', 'bg-blue-100'),
+    accentBorder: 'border-blue-600',
+    
+    // New organic accent colors
+    warmAccent: getClass('text-blue-500', 'text-blue-600'),
+    warmBg: getClass('bg-stone-800/60', 'bg-blue-50/60'),
     
     // Get a custom style for both themes
     getStyle: getClass,

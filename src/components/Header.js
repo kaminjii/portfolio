@@ -1,162 +1,100 @@
-"use client";
-
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { useTheme } from '../app/ThemeContext';
-import useThemeClasses, { cx } from '../app/ThemeUtils';
+import { useTheme } from '../app/ThemeContext'; // Assuming path
+import useThemeClasses, { cx } from '../app/ThemeUtils'; // Assuming path
 
 const Header = ({ activeSection, sections, scrollToSection }) => {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [hidden, setHidden] = useState(false);
   const { theme } = useTheme();
-  const classes = useThemeClasses();
-  
-  const navRefs = useMemo(() => sections.map(() => ({ current: null })), [sections]);
+  // const classes = useThemeClasses(); // classes variable is not used
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-      
-      if (currentScrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-      
-      setLastScrollY(currentScrollY);
+      setScrolled(window.scrollY > 50);
     };
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
-  const handleNavClick = (section, e) => {
-    const createRipple = (e) => {
-      const button = e.currentTarget;
-      const circle = document.createElement('span');
-      const diameter = Math.max(button.clientWidth, button.clientHeight);
-      
-      circle.style.width = circle.style.height = `${diameter}px`;
-      circle.style.left = `${e.clientX - button.offsetLeft - diameter / 2}px`;
-      circle.style.top = `${e.clientY - button.offsetTop - diameter / 2}px`;
-      circle.classList.add('ripple');
-      
-      const ripple = button.querySelector('.ripple');
-      if (ripple) {
-        ripple.remove();
-      }
-      
-      button.appendChild(circle);
-    };
-    
-    if (e) {
-      createRipple(e);
-    }
-    
+  const handleNavClick = (section) => {
     setNavOpen(false);
     scrollToSection(section);
   };
-  
-  const handleMouseMove = (e, index) => {
-    const ref = navRefs[index];
-    if (!ref.current) return;
-    
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const x = e.clientX - left;
-    const y = e.clientY - top;
-    const centerX = width / 2;
-    const centerY = height / 2;
-    
-    const moveX = (x - centerX) / 10;
-    const moveY = (y - centerY) / 10;
-    
-    ref.current.style.transform = `translate(${moveX}px, ${moveY}px)`;
-  };
 
-  const handleMouseLeave = (index) => {
-    if (navRefs[index].current) {
-      navRefs[index].current.style.transform = 'translate(0, 0)';
-    }
-  };
+  // Define theme-specific accent colors for the "Oriental Bowls" theme
+  const accentColor = theme === 'dark' ? "text-red-400" : "text-red-600";
+  const accentBgColor = theme === 'dark' ? "bg-red-600 hover:bg-red-500" : "bg-red-700 hover:bg-red-600";
+  const navLinkHoverColor = theme === 'dark' ? "text-stone-100" : "text-stone-900";
+  const navLinkColor = theme === 'dark' ? "text-stone-300" : "text-stone-600";
 
   return (
     <>
       <header 
         className={cx(
-          "fixed top-0 w-full z-40 py-4 px-6 transition-all duration-300",
+          "fixed top-0 w-full z-50 transition-all duration-500 font-sans", // Added font-sans for general text
           scrolled 
             ? theme === 'dark' 
-              ? "bg-gray-900/80 backdrop-blur-md shadow-md" 
-              : "bg-white/80 backdrop-blur-md shadow-md"
-            : "bg-transparent",
-          hidden ? '-translate-y-full' : 'translate-y-0'
+              ? "bg-stone-950/90 backdrop-blur-md" 
+              : "bg-white/90 backdrop-blur-md shadow-sm"
+            : "bg-transparent"
         )}
       >
-        {/* Subtle gradient line */}
-        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-teal-500/20 to-transparent opacity-50"></div>
-        
-        <nav className="max-w-6xl mx-auto flex justify-between items-center">
+        <nav className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-6 flex justify-between items-center">
+          {/* Logo */}
           <div 
-            className="text-2xl font-bold cursor-pointer group"
+            className="cursor-pointer group"
             onClick={() => handleNavClick('home')}
           >
-            <span className="text-teal-400 transition-transform duration-300 inline-block group-hover:rotate-12">K</span>
-            <span className={cx(
-              "transition-transform duration-300 inline-block group-hover:-rotate-12",
-              theme === 'dark' ? "text-white" : "text-gray-900"
-            )}>W</span>
+            <div className={cx(
+              "text-2xl font-serif tracking-wide transition-colors", // Changed to font-serif
+              theme === 'dark' ? "text-stone-100" : "text-stone-900"
+            )}>
+              kaitlin<span className={cx(theme === 'dark' ? "text-red-400" : "text-red-600", "font-medium")}>.</span>
+            </div>
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            {sections.map((section, index) => (
+          <div className="hidden md:flex items-center gap-8">
+            {sections.slice(1).map((section) => (
               <button
                 key={section}
-                ref={(el) => { navRefs[index].current = el; }}
-                onClick={(e) => handleNavClick(section, e)}
-                onMouseMove={(e) => handleMouseMove(e, index)}
-                onMouseLeave={() => handleMouseLeave(index)}
+                onClick={() => handleNavClick(section)}
                 className={cx(
-                  "group relative text-sm font-medium uppercase tracking-widest px-1 py-2 transition-all duration-300",
+                  "relative font-light text-sm uppercase tracking-wider transition-colors",
                   activeSection === section 
-                    ? "text-teal-400" 
-                    : theme === 'dark' 
-                      ? "text-gray-400 hover:text-white" 
-                      : "text-gray-500 hover:text-gray-900"
+                    ? accentColor
+                    : `${navLinkColor} hover:${navLinkHoverColor}`
                 )}
-                style={{ transitionProperty: 'color, transform', transformStyle: 'preserve-3d' }}
               >
-                {section !== 'home' && <span className="opacity-60 mr-1">0{index}</span>} {section}
-                <span className={cx(
-                  "absolute left-0 bottom-0 h-0.5 bg-teal-400 transition-all duration-300",
-                  activeSection === section ? 'w-full' : 'w-0 group-hover:w-full'
-                )}></span>
+                {section}
+                {activeSection === section && (
+                  <span className={cx("absolute -bottom-1 left-0 right-0 h-px", theme === 'dark' ? "bg-red-400" : "bg-red-600")}></span>
+                )}
               </button>
             ))}
-
-            {/* Resume Download Button */}
+            
+            {/* Resume button */}
             <a
-              href="resume.pdf"
+              href="resume.pdf" // Assuming resume.pdf is in the public folder
               download="KaitlinWood_Resume.pdf"
-              className="text-sm font-medium uppercase tracking-widest px-4 py-2 border border-teal-400 text-teal-400 rounded hover:bg-teal-900/20 transition-all duration-300"
+              className={cx(
+                "ml-4 px-5 py-2 rounded-full text-sm font-medium text-white transition-all duration-300",
+                accentBgColor
+              )}
             >
               Resume
             </a>
           </div>
           
-          {/* Mobile Navigation Button */}
+          {/* Mobile menu button */}
           <button
             className={cx(
-              "md:hidden hover:text-teal-400 transition-colors z-50",
-              theme === 'dark' ? "text-gray-300" : "text-gray-700"
+              "md:hidden p-2 rounded-lg transition-colors",
+              theme === 'dark' 
+                ? "text-stone-300 hover:bg-stone-800" 
+                : "text-stone-700 hover:bg-stone-100"
             )}
             onClick={() => setNavOpen(!navOpen)}
             aria-label={navOpen ? "Close menu" : "Open menu"}
@@ -166,39 +104,71 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
         </nav>
       </header>
       
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation */}
       <div 
         className={cx(
-          "fixed inset-0 flex justify-center items-center transition-all duration-500 md:hidden",
-          navOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
-          theme === 'dark' ? "bg-gray-900/95" : "bg-white/95"
+          "fixed inset-0 z-40 md:hidden transition-all duration-500 font-sans",
+          navOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
       >
-        <div className="flex flex-col items-center space-y-8">
-          {sections.map((section, index) => (
-            <button
-              key={section}
-              onClick={() => handleNavClick(section)}
+        {/* Backdrop */}
+        <div 
+          className={cx(
+            "absolute inset-0 transition-opacity duration-500",
+            theme === 'dark' ? "bg-stone-950/95" : "bg-white/95",
+            navOpen ? 'backdrop-blur-md' : ''
+          )}
+          onClick={() => setNavOpen(false)}
+        />
+        
+        {/* Menu content */}
+        <div className={cx(
+          "absolute right-0 top-0 h-full w-64 p-8 transition-transform duration-500",
+          theme === 'dark' ? "bg-stone-900" : "bg-white",
+          navOpen ? 'translate-x-0' : 'translate-x-full'
+        )}>
+          <button
+            className={cx(
+              "absolute top-6 right-6 p-2 rounded-lg",
+              theme === 'dark' 
+                ? "text-stone-300 hover:bg-stone-800" 
+                : "text-stone-700 hover:bg-stone-100"
+            )}
+            onClick={() => setNavOpen(false)}
+          >
+            <X size={24} />
+          </button>
+          
+          <div className="mt-16 space-y-6">
+            {sections.map((section) => (
+              <button
+                key={section}
+                onClick={() => handleNavClick(section)}
+                className={cx(
+                  "block w-full text-left text-lg font-light transition-colors",
+                  activeSection === section 
+                    ? accentColor 
+                    : `${navLinkColor} hover:${navLinkHoverColor}`
+                )}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </button>
+            ))}
+            
+            <a
+              href="resume.pdf" // Assuming resume.pdf is in the public folder
+              download="KaitlinWood_Resume.pdf"
               className={cx(
-                "text-xl font-medium uppercase relative",
-                activeSection === section 
-                  ? "text-teal-400" 
-                  : theme === 'dark' 
-                    ? "text-gray-300" 
-                    : "text-gray-700"
+                "inline-block mt-8 px-6 py-3 rounded-full text-sm font-medium text-white",
+                accentBgColor
               )}
             >
-              <span className="opacity-60 mr-2">0{index + 1}.</span> {section}
-              <span className={cx(
-                "absolute left-0 bottom-0 h-0.5 bg-teal-400 transition-all duration-300",
-                activeSection === section ? 'w-full' : 'w-0'
-              )}></span>
-            </button>
-          ))}
+              Download Resume
+            </a>
+          </div>
         </div>
       </div>
     </>
   );
 };
-
 export default Header;
