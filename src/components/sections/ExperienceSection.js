@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Calendar, MapPin, Briefcase } from 'lucide-react';
-import FadeIn from '../animations/FadeIn'; // Assuming path
-import { useTheme } from '../../app/ThemeContext'; // Assuming path
-import useThemeClasses, { cx } from '../../app/ThemeUtils'; // Assuming path
+import FadeIn from '../animations/FadeIn'; 
+import { useTheme } from '../../app/ThemeContext'; 
+import { cx } from '../../app/ThemeUtils'; 
 
 const experienceData = [
   {
@@ -66,7 +66,7 @@ const ExperienceCard = ({ experience, isActive, onClick }) => {
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
         <div>
           <h3 className={cx(
-            "text-2xl font-medium mb-2 font-serif", // User updated to font-serif, comment updated
+            "text-2xl font-medium mb-2 font-serif",
             theme === 'dark' ? "text-stone-100" : "text-stone-900"
           )}>
             {experience.title}
@@ -113,7 +113,7 @@ const ExperienceCard = ({ experience, isActive, onClick }) => {
               <li 
                 key={index} 
                 className={cx(
-                  "flex items-center gap-3", // Changed items-start to items-center
+                  "flex items-center gap-3", 
                   theme === 'dark' ? "text-stone-300" : "text-stone-600"
                 )}
               >
@@ -144,9 +144,7 @@ const ExperienceSection = ({ sectionRef }) => {
   const [activeExp, setActiveExp] = useState(0); 
   const { theme } = useTheme();
   const accentColorText = theme === 'dark' ? "text-red-400" : "text-red-600";
-  const decorativeBlobColorFrom = theme === 'dark' ? "from-red-400/5" : "from-red-500/5"; 
-  const decorativeBlobColorTo = theme === 'dark' ? "to-orange-400/5" : "to-orange-500/5"; 
-  
+    
   return (
     <section ref={sectionRef} id="experience" className="py-32 relative font-sans"> 
       <div className="max-w-6xl mx-auto px-6 sm:px-12">
@@ -173,11 +171,6 @@ const ExperienceSection = ({ sectionRef }) => {
             </FadeIn>
           ))}
         </div>
-        
-        <div className={cx(
-            "absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br rounded-full blur-3xl -z-10",
-            decorativeBlobColorFrom, decorativeBlobColorTo
-        )}></div>
       </div>
     </section>
   );

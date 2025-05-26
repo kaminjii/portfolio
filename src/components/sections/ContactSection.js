@@ -16,17 +16,12 @@ const ContactSection = ({ sectionRef }) => {
     error: false
   });
   const { theme } = useTheme();
-  // const classes = useThemeClasses(); // classes variable is not used
 
-  // Define theme-specific accent colors
   const accentColorText = theme === 'dark' ? "text-red-400" : "text-red-600";
   const accentColorBorderFocus = theme === 'dark' ? "focus:border-red-500" : "focus:border-red-600";
   const accentColorRingFocus = theme === 'dark' ? "focus:ring-red-500/20" : "focus:ring-red-600/20";
   const primaryButtonBg = theme === 'dark' ? "bg-red-600 text-white hover:bg-red-500" : "bg-red-700 text-white hover:bg-red-600";
   const secondaryButtonBg = theme === 'dark' ? "bg-stone-800 text-stone-200 hover:bg-stone-700" : "bg-stone-200 text-stone-700 hover:bg-stone-300";
-  const decorativeBlobColorFrom = theme === 'dark' ? "from-red-400/10" : "from-red-500/10";
-  const decorativeBlobColorTo = theme === 'dark' ? "to-orange-400/10" : "to-orange-500/10";
-
 
   const handleChange = (e) => {
     setFormState({
@@ -37,28 +32,29 @@ const ContactSection = ({ sectionRef }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus({ ...formStatus, sending: true, error: false, sent: false }); // Reset error/sent status
+    setFormStatus({ ...formStatus, sending: true });
 
-    // Simulate API call
     try {
-      // Replace with your actual API endpoint
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formState),
-      // });
-      // const data = await response.json();
-      // if (!response.ok) throw new Error(data.error || 'Failed to send message');
-      
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
 
-      setFormStatus({ sending: false, sent: true, error: false });
-      setFormState({ name: '', email: '', message: '' });
-      
-      setTimeout(() => {
-        setFormStatus({ sending: false, sent: false, error: false });
-      }, 5000);
+      const data = await response.json();
 
+      if (response.ok) {
+        setFormStatus({ sending: false, sent: true, error: false });
+        setFormState({ name: '', email: '', message: '' });
+        
+        setTimeout(() => {
+          setFormStatus({ sending: false, sent: false, error: false });
+        }, 5000);
+      } else {
+        throw new Error(data.error || 'Failed to send message');
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       setFormStatus({ sending: false, sent: false, error: true });
@@ -276,11 +272,6 @@ const ContactSection = ({ sectionRef }) => {
             </div>
           </div>
         </FadeIn>
-        
-        <div className={cx(
-            "absolute -right-20 bottom-0 w-64 h-64 bg-gradient-to-br rounded-full blur-3xl -z-10",
-            decorativeBlobColorFrom, decorativeBlobColorTo
-        )}></div>
       </div>
     </section>
   );

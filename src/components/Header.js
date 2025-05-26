@@ -7,7 +7,6 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme } = useTheme();
-  // const classes = useThemeClasses(); // classes variable is not used
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +22,6 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
     scrollToSection(section);
   };
 
-  // Define theme-specific accent colors for the "Oriental Bowls" theme
   const accentColor = theme === 'dark' ? "text-red-400" : "text-red-600";
   const accentBgColor = theme === 'dark' ? "bg-red-600 hover:bg-red-500" : "bg-red-700 hover:bg-red-600";
   const navLinkHoverColor = theme === 'dark' ? "text-stone-100" : "text-stone-900";
@@ -33,7 +31,7 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
     <>
       <header 
         className={cx(
-          "fixed top-0 w-full z-50 transition-all duration-500 font-sans", // Added font-sans for general text
+          "fixed top-0 w-full z-50 transition-all duration-500 font-sans",
           scrolled 
             ? theme === 'dark' 
               ? "bg-stone-950/90 backdrop-blur-md" 
@@ -48,7 +46,7 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
             onClick={() => handleNavClick('home')}
           >
             <div className={cx(
-              "text-2xl font-serif tracking-wide transition-colors", // Changed to font-serif
+              "text-2xl font-serif tracking-wide transition-colors", 
               theme === 'dark' ? "text-stone-100" : "text-stone-900"
             )}>
               kaitlin<span className={cx(theme === 'dark' ? "text-red-400" : "text-red-600", "font-medium")}>.</span>
@@ -77,7 +75,7 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
             
             {/* Resume button */}
             <a
-              href="resume.pdf" // Assuming resume.pdf is in the public folder
+              href="resume.pdf"
               download="KaitlinWood_Resume.pdf"
               className={cx(
                 "ml-4 px-5 py-2 rounded-full text-sm font-medium text-white transition-all duration-300",
@@ -156,7 +154,7 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
             ))}
             
             <a
-              href="resume.pdf" // Assuming resume.pdf is in the public folder
+              href="resume.pdf" 
               download="KaitlinWood_Resume.pdf"
               className={cx(
                 "inline-block mt-8 px-6 py-3 rounded-full text-sm font-medium text-white",

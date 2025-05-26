@@ -5,7 +5,7 @@
   --background: #f3f6fa;
   --foreground: #3d3d3d;
 
-  /* Light mode - warm, organic colors */
+  /* Light mode */
   --light-background: #f3f7fa;
   --light-foreground: #3d3d3d;
   --light-card-bg: #ffffff;
@@ -14,7 +14,7 @@
   --light-highlight: #749cd4;
   --light-accent: #55608b;
 
-  /* Dark mode - softer, warmer tones */
+  /* Dark mode */
   --dark-background: #1a1916;
   --dark-foreground: #edf0f5;
   --dark-card-bg: #25272a;
@@ -259,7 +259,7 @@ body {
   width: 100%;
 }
 
-/* Button styles - organic */
+/* Button styles */
 .btn-organic {
   position: relative;
   padding: 0.75rem 2rem;
@@ -290,7 +290,7 @@ body {
   opacity: 0.1;
 }
 
-/* Card hover effect - organic */
+/* Card hover effect */
 .card-organic {
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   border-radius: 1.5rem;
@@ -300,19 +300,11 @@ body {
   transform: translateY(-4px);
 }
 
-/* Focus styles - organic */
+/* Focus styles */
 *:focus-visible {
   outline: 2px solid var(--highlight);
   outline-offset: 4px;
   border-radius: 0.5rem;
-}
-
-/* Gradient text - warm tones */
-.gradient-text {
-  background: linear-gradient(135deg, #3182ce, #193cb8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* Noise texture overlay */
@@ -328,13 +320,6 @@ body {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
-
-/* Smooth transitions */
-/* * {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
-} */
 
 /* Disable transitions on theme change */
 html.transitioning * {

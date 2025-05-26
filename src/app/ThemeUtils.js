@@ -2,12 +2,10 @@
 
 import { useTheme } from './ThemeContext';
 
-// Utility function to combine class names
 export const cx = (...classNames) => {
   return classNames.filter(Boolean).join(' ');
 };
 
-// Custom hook to provide theme-dependent classes
 const useThemeClasses = () => {
   const { theme } = useTheme();
   
@@ -16,44 +14,36 @@ const useThemeClasses = () => {
   };
   
   return {
-    // Text colors
     text: getClass('text-stone-100', 'text-stone-800'),
     textSecondary: getClass('text-stone-300', 'text-stone-600'),
     textMuted: getClass('text-stone-400', 'text-stone-500'),
     
-    // Background colors
     bg: getClass('bg-stone-950', 'bg-stone-50'),
     bgSecondary: getClass('bg-stone-900', 'bg-white'),
     bgTertiary: getClass('bg-stone-800/50', 'bg-stone-100'),
     
-    // Border colors
     border: getClass('border-stone-700', 'border-stone-200'),
     borderLight: getClass('border-stone-800', 'border-stone-100'),
     
-    // Card styles
     card: getClass(
       'bg-stone-900/30 border-stone-700', 
       'bg-white border-stone-200 shadow-soft'
     ),
     
-    // Button styles
     button: getClass(
       'bg-stone-800 text-stone-200 hover:bg-stone-700',
       'bg-stone-100 text-stone-800 hover:bg-stone-200'
     ),
     
-    // Accent colors - warm tones
     accent: 'text-blue-600',
     accentDark: 'text-blue-700',
     accentBg: 'bg-blue-600',
     accentBgLight: getClass('bg-blue-900/20', 'bg-blue-100'),
     accentBorder: 'border-blue-600',
     
-    // New organic accent colors
     warmAccent: getClass('text-blue-500', 'text-blue-600'),
     warmBg: getClass('bg-stone-800/60', 'bg-blue-50/60'),
     
-    // Get a custom style for both themes
     getStyle: getClass,
   };
 };

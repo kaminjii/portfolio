@@ -24,14 +24,12 @@ const App = () => {
 
   const sections = useMemo(() => ['home', 'about', 'experience', 'projects', 'contact'], []);
 
-  // Create refs individually
   const homeRef = useRef(null);
   const aboutRef = useRef(null);
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
 
-  // Memoize the refs object
   const sectionRefs = useMemo(() => ({
     home: homeRef,
     about: aboutRef,
@@ -40,7 +38,6 @@ const App = () => {
     contact: contactRef,
   }), []);
 
-  // Track mouse position for parallax effects
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -334,7 +331,7 @@ const App = () => {
                           "px-4 py-3 rounded-2xl text-center font-medium transition-all duration-300 hover:-translate-y-1",
                           theme === 'dark' 
                            ? "bg-slate-800/50 text-stone-300 hover:bg-slate-700" 
-                            : "bg-amber-100 text-stone-700 hover:bg-amber-200"
+                            : "bg-white/70 text-stone-700 hover:bg-white border border-gray-200 hover:shadow-lg hover:shadow-red-500/20"
                         )}
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
@@ -349,7 +346,7 @@ const App = () => {
                 <FadeIn delay={500} direction="left">
                   <div className={cx(
                     "sticky top-24 p-8 rounded-3xl",
-                    theme === 'dark'? "bg-slate-800/30 border border-slate-700/50" : "bg-amber-100/80 border border-amber-200/80"
+                    theme === 'dark'? "bg-slate-800/30 border border-slate-700/50" : "bg-white/70 shadow-sm"
                   )}>
                     <div className="flex items-center gap-3 mb-6">
                       <Heart className={cx(theme === 'dark'? "text-red-400" : "text-red-700")} size={24} />

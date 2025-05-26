@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import Image from 'next/image'; // Make sure to handle Image imports if using Next.js
+import Image from 'next/image';
 import { ExternalLink, Github, Code2, Layers } from 'lucide-react';
-import FadeIn from '../animations/FadeIn'; // Assuming path
-import { useTheme } from '../../app/ThemeContext'; // Assuming path
-import useThemeClasses, { cx } from '../../app/ThemeUtils'; // Assuming path
+import FadeIn from '../animations/FadeIn'; 
+import { useTheme } from '../../app/ThemeContext'; 
+import useThemeClasses, { cx } from '../../app/ThemeUtils'; 
 
 const projectsData = [
   {
@@ -14,11 +14,11 @@ const projectsData = [
     longDescription: 'iOS app built with SwiftUI, integrating Firebase Firestore for real-time data sync and offline functionality. Features include Firebase Auth with email and social sign-in options, and optimized image storage system.',
     points: [ /* Placeholder for bullet points */ ],
     tech: ['Swift', 'XCode', 'Firebase'],
-    image: '/glow.png', // Actual image path
-    color: 'from-red-400 to-orange-400', // Gradient color for card styling
-    featured: true, // Boolean to mark as a featured project
-    category: 'mobile', // Category for filtering
-    links: {} // Object for project links (e.g., GitHub, live demo)
+    image: '/glow.png', 
+    color: 'from-red-400 to-orange-400', 
+    featured: true, 
+    category: 'mobile', 
+    links: {} 
   },
   {
     id: 'dropawf',
@@ -78,7 +78,7 @@ const projectsData = [
     links: { 
       live: 'https://docs.google.com/presentation/d/1JfcGZgNcTMChKZFgFx2aYGrDBVClSnuJjORsl8ye5jo/edit?usp=sharing'
     },
-    image: null, // Will use placeholder defined in Image component
+    image: null, 
     featured: false,
     category: 'web', // Kepler.gl implies web visualization
   },
@@ -135,18 +135,17 @@ const projectsData = [
 
 // Component for displaying a featured project card.
 const FeaturedProjectCard = ({ project, index }) => {
-  const { theme } = useTheme(); // Access current theme (light/dark)
-  const accentColorSubtitle = theme === 'dark' ? "text-red-300" : "text-red-700"; // Theme-dependent subtitle color
+  const { theme } = useTheme(); 
+  const accentColorSubtitle = theme === 'dark' ? "text-red-300" : "text-red-700"; 
   
   return (
-    // FadeIn animation wrapper with a delay based on the card's index.
-    <FadeIn delay={index * 100} className="h-full"> {/* Ensure FadeIn takes full height */}
-      <div className="group relative h-full"> {/* Group for hover effects, takes full height */}
+    <FadeIn delay={index * 100} className="h-full">
+      <div className="group relative h-full"> 
         {/* Main card container with styling and transitions */}
         <div className={cx(
           "relative h-full rounded-3xl overflow-hidden transition-all duration-700",
-          theme === 'dark' ? "bg-stone-900" : "bg-white", // Theme-based background
-          "shadow-lg hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2" // Hover effects
+          theme === 'dark' ? "bg-stone-900" : "bg-white",
+          "shadow-lg hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2" 
         )}>
           {/* Image container */}
           <div className="relative h-64 overflow-hidden">
@@ -160,9 +159,9 @@ const FeaturedProjectCard = ({ project, index }) => {
             <Image
               src={project.image || `https://placehold.co/600x400/${project.color?.split('-')[1]?.split('/')[0] || 'CCCCCC'}/FFFFFF?text=${encodeURIComponent(project.title)}`}
               alt={project.title}
-              layout="fill" // Fills the parent container
-              objectFit="cover" // Covers the container, cropping if necessary
-              className="transition-transform duration-700 group-hover:scale-110" // Zoom effect on hover
+              layout="fill" 
+              objectFit="cover"
+              className="transition-transform duration-700 group-hover:scale-110" 
             />
             
             {/* Links (GitHub, Live Demo) positioned at top-right */}
@@ -178,7 +177,7 @@ const FeaturedProjectCard = ({ project, index }) => {
                       ? "bg-stone-900/70 text-stone-200 hover:bg-stone-800 hover:text-red-400" 
                       : "bg-white/70 text-stone-700 hover:bg-white hover:text-red-600"
                   )}
-                  onClick={(e) => e.stopPropagation()} // Prevent card click when link is clicked
+                  onClick={(e) => e.stopPropagation()} 
                   aria-label={`${project.title} GitHub repository`}
                 >
                   <Github size={18} />
@@ -206,7 +205,7 @@ const FeaturedProjectCard = ({ project, index }) => {
             {/* Decorative project index number */}
             <div className={cx(
               "absolute bottom-4 left-4 text-6xl font-light z-20",
-              theme === 'dark' ? "text-white/20" : "text-white/30" // Semi-transparent text
+              theme === 'dark' ? "text-white/20" : "text-white/30" 
             )}>
               0{index + 1}
             </div>
@@ -216,7 +215,7 @@ const FeaturedProjectCard = ({ project, index }) => {
           <div className="p-6 md:p-8"> {/* Responsive padding */}
             <div className="mb-4">
               <h3 className={cx(
-                "text-xl md:text-2xl font-medium mb-1 font-serif", // Responsive text size
+                "text-xl md:text-2xl font-medium mb-1 font-serif",
                 theme === 'dark' ? "text-stone-100" : "text-stone-900"
               )}>
                 {project.title}
@@ -227,17 +226,17 @@ const FeaturedProjectCard = ({ project, index }) => {
             </div>
             
             <p className={cx(
-              "mb-6 line-clamp-3 text-sm", // Limits description to 3 lines
+              "mb-6 line-clamp-6 text-sm",
               theme === 'dark' ? "text-stone-300" : "text-stone-600"
             )}>
-              {project.longDescription || project.description} {/* Fallback to short description if long is not available */}
+              {project.longDescription || project.description} 
             </p>
             
             {/* Tech stack tags */}
             <div className="flex flex-wrap gap-2">
               {project.tech.map((tech) => (
                 <span
-                  key={tech} // Assuming tech names are unique within a project
+                  key={tech} 
                   className={cx(
                     "flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium",
                     theme === 'dark' 
@@ -258,10 +257,10 @@ const FeaturedProjectCard = ({ project, index }) => {
 
 // Component for displaying a standard (non-featured) project card.
 const ProjectCard = ({ project, delay }) => {
-  const cardRef = useRef(null); // Ref for accessing the card DOM element
-  const [isHovered, setIsHovered] = useState(false); // State to track hover status
+  const cardRef = useRef(null); 
+  const [isHovered, setIsHovered] = useState(false);
   const { theme } = useTheme();
-  const accentColorTitle = theme === 'dark' ? "text-red-400" : "text-red-500"; // Title color based on theme
+  const accentColorTitle = theme === 'dark' ? "text-red-400" : "text-red-500"; 
 
   // Mouse move handler for 3D tilt effect on hover
   const handleMouseMove = (e) => {
@@ -269,8 +268,8 @@ const ProjectCard = ({ project, delay }) => {
     const { left, top, width, height } = cardRef.current.getBoundingClientRect();
     const x = e.clientX - left;
     const y = e.clientY - top;
-    const rotateY = ((x - width / 2) / width) * 3; // Calculate Y rotation
-    const rotateX = -((y - height / 2) / height) * 3; // Calculate X rotation
+    const rotateY = ((x - width / 2) / width) * 3;
+    const rotateX = -((y - height / 2) / height) * 3; 
     // Apply transform for 3D effect
     cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
   };
@@ -279,27 +278,27 @@ const ProjectCard = ({ project, delay }) => {
   const handleMouseLeave = () => {
     if (!cardRef.current) return;
     cardRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-    setIsHovered(false); // Reset hover state
+    setIsHovered(false); 
   };
   
   return (
-    <FadeIn delay={delay} className="h-full"> {/* Ensure FadeIn takes full height */}
+    <FadeIn delay={delay} className="h-full"> 
       <div 
         ref={cardRef}
         className={cx(
-          "border rounded-xl p-6 h-full transition-all duration-300 flex flex-col", // Flex column for layout, full height
+          "border rounded-xl p-6 h-full transition-all duration-300 flex flex-col",
           theme === 'dark' 
-            ? isHovered // Conditional styling based on hover state and theme
+            ? isHovered 
               ? "bg-stone-800/50 border-stone-700 shadow-lg shadow-red-500/10"
               : "bg-stone-900/30 hover:border-stone-700 border-stone-800"
             : isHovered 
               ? "bg-white border-gray-300 shadow-lg shadow-red-500/10"
               : "bg-white/60 hover:border-gray-300 border-gray-200"
         )}
-        onMouseEnter={() => setIsHovered(true)} // Set hover state on mouse enter
+        onMouseEnter={() => setIsHovered(true)} 
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-        style={{ transformStyle: 'preserve-3d', willChange: 'transform' }} // Optimize for transform animations
+        style={{ transformStyle: 'preserve-3d', willChange: 'transform' }} 
       >
         {/* Project title and links */}
         <div className="flex justify-between items-start mb-4">
@@ -341,7 +340,7 @@ const ProjectCard = ({ project, delay }) => {
         </p>
         {/* Tech stack tags, pushed to the bottom of the card */}
         <div className="flex flex-wrap gap-2 mt-auto"> 
-          {project.tech.map((item, techIndex) => ( // Changed key to techIndex for simple list
+          {project.tech.map((item, techIndex) => ( 
             <span 
               key={techIndex} 
               className={cx(
@@ -364,34 +363,21 @@ const ProjectCard = ({ project, delay }) => {
 // Main component for the Projects section.
 const ProjectsSection = ({ sectionRef }) => {
   const { theme } = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState('all'); // State for the active category filter
-  const [showAllProjects, setShowAllProjects] = useState(false); // State to toggle visibility of non-featured projects
-  
-  // Uncomment to debug: Log when selectedCategory changes
-  // useEffect(() => {
-  //   console.log("Selected category changed to:", selectedCategory);
-  //   // Optional: Reset showAllProjects when category changes for a cleaner UX
-  //   // setShowAllProjects(false); 
-  // }, [selectedCategory]);
+  const [selectedCategory, setSelectedCategory] = useState('all'); 
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   // Filter projects based on the selected category.
   const activeProjects = projectsData.filter(project => {
     if (selectedCategory === 'all') {
-      return true; // Show all projects if 'all' is selected
+      return true; 
     }
-    return project.category === selectedCategory; // Otherwise, filter by category
+    return project.category === selectedCategory; 
   });
-  // Uncomment to debug: Log the active (filtered) projects
-  // console.log(`Active projects for category "${selectedCategory}":`, activeProjects.map(p=>p.title));
-
 
   // Separate featured and other projects from the active (filtered) list.
   const featuredProjects = activeProjects.filter(project => project.featured);
   const otherProjects = activeProjects.filter(project => !project.featured);
   
-  // Uncomment to debug: Log the featured and other projects
-  // console.log("Featured projects:", featuredProjects.map(p=>p.title));
-  // console.log("Other projects:", otherProjects.map(p=>p.title));
   
   // Define categories for filter buttons.
   const categories = ['all', 'web', 'mobile', 'games', 'other']; 
@@ -420,9 +406,9 @@ const ProjectsSection = ({ sectionRef }) => {
             
             {/* Category filter buttons */}
             <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
-              {categories.map((categoryButtonValue) => ( // Renamed for clarity from 'category' to avoid conflict
+              {categories.map((categoryButtonValue) => (
                 <button
-                  key={categoryButtonValue} // Use category value for key
+                  key={categoryButtonValue} 
                   onClick={() => {
                     // console.log("Button clicked, setting category to:", categoryButtonValue);
                     setSelectedCategory(categoryButtonValue); 

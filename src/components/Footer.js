@@ -1,11 +1,10 @@
 import React from 'react';
-import { Heart, Coffee, ArrowUp, Github, Linkedin, Mail } from 'lucide-react'; // Added Github, Linkedin, Mail
-import { useTheme } from '../app/ThemeContext'; // Assuming path
-import useThemeClasses, { cx } from '../app/ThemeUtils'; // Assuming path
+import { Heart, Coffee, ArrowUp, Github, Linkedin, Mail } from 'lucide-react';
+import { useTheme } from '../app/ThemeContext';
+import { cx } from '../app/ThemeUtils'; 
 
 const Footer = () => {
   const { theme } = useTheme();
-  // const classes = useThemeClasses(); // classes variable is not used
   
   const scrollToTop = () => {
     window.scrollTo({
@@ -14,7 +13,6 @@ const Footer = () => {
     });
   };
 
-  // Define theme-specific accent colors
   const accentColor = theme === 'dark' ? "text-red-400" : "text-red-600";
   const accentColorIcon = theme === 'dark' ? "text-red-400" : "text-red-600";
   const socialLinkHoverBg = theme === 'dark' ? "hover:bg-stone-700" : "hover:bg-stone-200";
@@ -22,7 +20,7 @@ const Footer = () => {
 
   return (
     <footer className={cx(
-      "relative pt-24 pb-12 font-sans", // Added font-sans
+      "relative pt-24 pb-12 font-sans", 
       theme === 'dark' ? "bg-stone-950" : "bg-stone-50"
     )}>
       <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
@@ -30,7 +28,7 @@ const Footer = () => {
         <div className="text-center mb-12">
           {/* Logo */}
           <div className={cx(
-            "text-4xl font-serif mb-6", // Changed to font-serif
+            "text-4xl font-serif mb-6",
             theme === 'dark' ? "text-stone-100" : "text-stone-900"
           )}>
             kaitlin<span className={cx(accentColor, "font-medium")}>.</span>
