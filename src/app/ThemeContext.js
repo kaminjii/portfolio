@@ -2,21 +2,16 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Create theme context
 const ThemeContext = createContext({
   theme: 'dark',
   toggleTheme: () => {},
 });
 
-// Custom hook to use the theme context
 export const useTheme = () => useContext(ThemeContext);
 
-// Theme provider component
 export const ThemeProvider = ({ children }) => {
-  // Initialize theme from localStorage if available, otherwise use system preference
   const [theme, setTheme] = useState('dark');
   
-  // Initialize theme on client side only
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
     
@@ -27,7 +22,6 @@ export const ThemeProvider = ({ children }) => {
     }
   }, []);
 
-  // Update document class when theme changes
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -37,11 +31,9 @@ export const ThemeProvider = ({ children }) => {
       document.documentElement.classList.remove('dark');
     }
     
-    // Save to localStorage
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // Toggle theme function
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
   };

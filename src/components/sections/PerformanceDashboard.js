@@ -132,7 +132,7 @@ const PerformanceDashboard = () => {
     if (!thresholds[metric]) return theme === 'dark' ? 'text-gray-300' : 'text-gray-700';
     
     if (value <= thresholds[metric].good) return 'text-green-400';
-    if (value <= thresholds[metric].average) return 'text-amber-400';
+    if (value <= thresholds[metric].average) return 'text-blue-400';
     return 'text-red-400';
   };
 
@@ -345,7 +345,7 @@ const PerformanceDashboard = () => {
                   theme === 'dark' ? "bg-gray-800/30" : "bg-gray-100"
                 )}>
                   <div className="flex items-center gap-2">
-                    <Zap size={14} className="text-amber-400" />
+                    <Zap size={14} className="text-blue-400" />
                     <span className="text-xs">Page Load Time</span>
                   </div>
                   <span className={cx(
