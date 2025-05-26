@@ -75,14 +75,14 @@ const ContactSection = ({ sectionRef }) => {
               "text-5xl sm:text-6xl font-serif mt-4 mb-6", // Changed to font-serif
               theme === 'dark' ? "text-stone-100" : "text-stone-900"
             )}>
-              Let's Create Together
+              Let&apos;s Create Together
             </h2>
             <p className={cx(
               "text-xl max-w-2xl mx-auto",
               theme === 'dark' ? "text-stone-300" : "text-stone-600"
             )}>
-              I'm always excited to connect and explore new opportunities. 
-              Whether you have a project in mind or just want to say hello, I'd love to hear from you.
+              I&apos;m always excited to connect and explore new opportunities. 
+              Whether you have a project in mind or just want to say hello, I&apos;d love to hear from you.
             </p>
           </div>
         </FadeIn>
@@ -212,7 +212,7 @@ const ContactSection = ({ sectionRef }) => {
             
             {formStatus.sent && (
               <div className="mt-6 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-700 dark:text-green-400 text-center">
-                Thank you for reaching out! I'll get back to you soon.
+                Thank you for reaching out! I&apos;ll get back to you soon.
               </div>
             )}
             

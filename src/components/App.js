@@ -112,7 +112,7 @@ const App = () => {
                   <p className={cx(
                     "font-medium text-lg",
                     theme === 'dark'? "text-amber-300" : "text-red-700"
-                  )}>Hello, I'm</p>
+                  )}>Hello, I&apos;m</p>
                 </div>
               </FadeIn>
               
@@ -289,7 +289,7 @@ const App = () => {
                     "text-lg leading-relaxed mb-6",
                     theme === 'dark'? "text-stone-300" : "text-stone-600"
                   )}>
-                    Hello! I'm Kaitlin, a software engineer with a passion for creating engaging digital experiences
+                    Hello! I&apos;m Kaitlin, a software engineer with a passion for creating engaging digital experiences
                     that blend functionality with aesthetics. My journey in tech began with a fascination for how
                     beautiful design and clean code can come together to solve real-world problems.
                   </p>
@@ -311,9 +311,9 @@ const App = () => {
                     "text-lg leading-relaxed mb-8",
                     theme === 'dark'? "text-stone-300" : "text-stone-600"
                   )}>
-                    When I'm not coding, you'll find me exploring local coffee shops, sketching interface ideas,
+                    When I&apos;m not coding, you&apos;ll find me exploring local coffee shops, sketching interface ideas,
                     or diving into the latest design trends. I believe that great software is not just about
-                    functionality—it's about creating experiences that delight and inspire.
+                    functionality—it&apos;s about creating experiences that delight and inspire.
                   </p>
                 </FadeIn>
                 

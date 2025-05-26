@@ -453,7 +453,7 @@ const ProjectsSection = ({ sectionRef }) => {
         ) : (
           <FadeIn>
             <p className={cx("text-center text-lg mb-16 md:mb-20", theme === 'dark' ? 'text-stone-400' : 'text-stone-600')}>
-              No featured projects in the "{selectedCategory}" category.
+              No featured projects in the &quot;{selectedCategory}&quot; category.
             </p>
           </FadeIn>
         )}
@@ -501,7 +501,7 @@ const ProjectsSection = ({ sectionRef }) => {
             ) : (
                 <FadeIn>
                     <p className={cx("text-center text-lg", theme === 'dark' ? 'text-stone-400' : 'text-stone-600')}>
-                    No other projects in the "{selectedCategory}" category.
+                    No other projects in the &quot;{selectedCategory}&quot; category.
                     </p>
                 </FadeIn>
             )}
