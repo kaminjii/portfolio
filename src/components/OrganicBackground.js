@@ -32,7 +32,7 @@ const OrganicBackground = () => {
         this.numPoints = 6;
         this.angle = 0;
         
-        // Generate initial points for blob shape
+        // Generate initial points 
         for (let i = 0; i < this.numPoints; i++) {
           const angle = (i / this.numPoints) * Math.PI * 2;
           const radius = this.size + Math.random() * 50;
@@ -95,7 +95,9 @@ const OrganicBackground = () => {
           const cp1y = p1.y + (p2.y - p1.y) * 0.5;
           const cp2x = p2.x + (p3.x - p2.x) * 0.5;
           const cp2y = p2.y + (p3.y - p2.y) * 0.5;
-          
+
+
+          ctx.quadraticCurveTo(p1.x, p1.y, cp1x, cp1y);
           ctx.quadraticCurveTo(p2.x, p2.y, cp2x, cp2y);
         }
         

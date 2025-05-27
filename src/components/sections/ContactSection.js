@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Send, Heart, Linkedin, Github } from 'lucide-react';
-import FadeIn from '../animations/FadeIn'; // Assuming path
-import { useTheme } from '../../app/ThemeContext'; // Assuming path
-import useThemeClasses, { cx } from '../../app/ThemeUtils'; // Assuming path
+import FadeIn from '../animations/FadeIn'; 
+import { useTheme } from '../../app/ThemeContext'; 
+import { cx } from '../../app/ThemeUtils'; 
 
 const ContactSection = ({ sectionRef }) => {
   const [formState, setFormState] = useState({
