@@ -665,7 +665,7 @@ const App = () => {
                 )}>Skills & Technologies</h3>
               </div>
 
-              <div className="overflow-hidden transition-all duration-1000" style={{ maxHeight: showAllSkills ? '1000px' : '66px' }}>
+              <div className="overflow-hidden transition-all duration-1000" style={{ maxHeight: showAllSkills ? '1000px' : '64px' }}>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 pb-4">
                   {skills.map((skill, index) => (
                     <div
