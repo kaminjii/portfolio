@@ -514,31 +514,6 @@ const App = () => {
             </div>
           </div>
           
-          {/* Enhanced Scroll Indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-            <FadeIn delay={800}>
-              <div className={cx(
-                "text-sm font-medium group cursor-pointer",
-                theme === 'dark' ? "text-amber-500" : "text-slate-400"
-              )}
-              onClick={() => scrollToSection('about')}>
-                <div className="flex flex-col items-center gap-2 transition-transform duration-300 group-hover:scale-110">
-                  <span className="transition-colors duration-300 group-hover:text-red-400">
-                    Scroll to explore
-                  </span>
-                  <div className="relative">
-                    <div className="w-px h-12 bg-current opacity-40 transition-all duration-300 group-hover:opacity-70" />
-                    {/* Animated dot */}
-                    <div className={cx(
-                      "absolute left-1/2 top-0 w-1 h-1 -translate-x-1/2 rounded-full animate-bounce",
-                      theme === 'dark' ? "bg-red-400" : "bg-red-500"
-                    )} />
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-          
           {/* Mouse follower effect */}
           <div 
             className="fixed w-8 h-8 rounded-full pointer-events-none mix-blend-multiply z-50 transition-opacity duration-300"
