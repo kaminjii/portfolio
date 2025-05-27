@@ -632,7 +632,7 @@ const App = () => {
             </div>
             
             <FadeIn delay={400}>
-              <div className="flex items-center gap-4 my-8">
+              <div className="flex items-center gap-4 mt-8">
                 <Sparkles className={cx(theme === 'dark' ? "text-red-400" : "text-red-700")} size={24} />
                 <h3 className={cx(
                   "text-2xl font-medium",
@@ -640,8 +640,8 @@ const App = () => {
                 )}>Skills & Technologies</h3>
               </div>
 
-              <div className="overflow-hidden transition-all duration-1000" style={{ maxHeight: showAllSkills ? '1000px' : '64px' }}>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 pb-4">
+              <div className="overflow-hidden transition-all duration-1000" style={{ maxHeight: showAllSkills ? '1000px' : '92px' }}>
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 pt-8 pb-4">
                   {skills.map((skill, index) => (
                     <div
                       key={skill}
@@ -649,9 +649,8 @@ const App = () => {
                         "px-4 py-3 rounded-2xl text-center font-medium transition-all duration-300 hover:-translate-y-1",
                         theme === 'dark'
                           ? "bg-slate-800/50 text-stone-300 hover:bg-slate-700"
-                          : "bg-white/70 text-stone-700 hover:bg-white border border-gray-200 hover:shadow-lg hover:shadow-red-500/20"
+                          : "bg-white/70 text-stone-700 hover:bg-white border border-gray-200 hover:shadow-sm hover:shadow-red-500/20"
                       )}
-                      style={{ animationDelay: `${index * 100}ms` }}
                     >
                       {skill}
                     </div>
