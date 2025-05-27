@@ -38,7 +38,7 @@ const projectsData = [
     title: 'Shades of Dungeon',
     subtitle: 'Browser Game',
     description: 'Pixel art puzzle game with custom level creation and physics mechanics.',
-    tech: ['React.js', 'Pixi.js'],
+    tech: ['React.js', 'Pixi.js', 'Tailwind CSS'],
     image: '/shades.png',
     color: 'from-rose-400 to-pink-400',
     featured: true,

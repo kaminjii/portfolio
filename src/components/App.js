@@ -109,7 +109,7 @@ const App = () => {
     if (window.location.hash) {
       window.history.replaceState({}, document.title, window.location.pathname);
     }
-  }, []); // Empty dependency array means this runs once on mount
+  }, []); 
 
   const handleScroll = useCallback(() => {
     // Don't run scroll detection if we're still at the very top

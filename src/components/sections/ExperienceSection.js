@@ -12,7 +12,7 @@ const experienceData = [
     location: 'St. Louis, MO',
     period: 'February 2025 – Present',
     type: 'Full-time',
-    skills: ['React', 'TypeScript', 'CI/CD', 'Jenkins', 'ARIA', 'Testing'],
+    skills: ['React', 'TypeScript', 'CI/CD', 'Jenkins', 'Java', 'Spring Boot'],
     achievements: [
       { icon: Zap, text: 'Build accessible UI components with ARIA attributes and keyboard navigation, increasing usability score',},
       { icon: Target, text: 'Implement robust test coverage during JS to TSX migration, improving overall code coverage to 98%',},
@@ -27,7 +27,7 @@ const experienceData = [
     location: 'Houston, TX',
     period: 'August 2023 – December 2024',
     type: 'Part-time',
-    skills: ['Data Structures', 'Algorithms', 'Teaching', 'Problem Solving', 'Mentoring'],
+    skills: ['Data Structures', 'Algorithms', 'Python', 'C++'],
     achievements: [
       { icon: Users, text: 'Mentored 450 students in understanding data structures, algorithms, and problem-solving, achieving 90% pass rate' },
       { icon: Target, text: 'Provided weekly office hours and review sessions for 50+ students, improving assignment completion rates by 15%' },
@@ -41,7 +41,7 @@ const experienceData = [
     location: 'Houston, TX',
     period: 'May 2023 – August 2023',
     type: 'Research',
-    skills: ['VR Development', 'Machine Learning', 'Eye Tracking', 'Data Analysis', 'Python'],
+    skills: ['VR Development', 'Machine Learning', 'Python', 'Unity', 'C#'],
     achievements: [
       { icon: Zap, text: 'Developed VR surgical training environments, incorporating eye-tracking and PVT outcomes to measure fatigue' },
       { icon: Target, text: 'Optimized machine learning algorithms by refining hyperparameters and data cleaning, improving speed by 7%', },
