@@ -110,6 +110,22 @@ const SmoothCursor = () => {
           transition: 'transform 0.1s ease-out'
         }}
       />
+      
+      {/* Cursor ring */}
+      {/* <div 
+        className={cx(
+          "fixed w-8 h-8 rounded-full border-2 pointer-events-none z-[99] transition-all duration-100",
+          theme === 'dark' ? "border-blue-400/50" : "border-blue-600/50",
+          cursorHidden ? 'opacity-0' : 'opacity-70',
+          isHovering ? 'scale-150 border-opacity-100' : '',
+          isClicking ? 'scale-90' : ''
+        )}
+        style={{ 
+          left: `${cursorPosition.x}px`, 
+          top: `${cursorPosition.y}px`,
+          transform: 'translate(-50%, -50%)',
+        }}
+      /> */}
     </>
   );
 };
