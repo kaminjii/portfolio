@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { useTheme } from '../app/ThemeContext';
 import useThemeClasses, { cx } from '../app/ThemeUtils';
 
-const Header = ({ activeSection, sections, scrollToSection }) => {
+const Header = ({ activeSection, sections, scrollToSection, onShowPlayground }) => {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -24,15 +24,12 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
             setScrolled(shouldBeScrolled);
           }
           
-          // Clear any existing timeout
           if (scrollTimeoutRef.current) {
             clearTimeout(scrollTimeoutRef.current);
           }
           
-          // Set scrolling state
           setIsScrolling(true);
           
-          // End scrolling state after scroll stops
           scrollTimeoutRef.current = setTimeout(() => {
             setIsScrolling(false);
             setPendingSection(null);
@@ -57,15 +54,17 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
   }, [scrolled]);
 
   const handleNavClick = (section) => {
+    if (section === 'playground') {
+        onShowPlayground();
+        return;
+    }
     setNavOpen(false);
     setPendingSection(section);
     setIsScrolling(true);
     scrollToSection(section);
   };
 
-  // Define nav link styles with smooth transitions
   const getNavLinkStyles = (section) => {
-    // Use pending section during scroll to prevent flicker
     const currentActive = isScrolling && pendingSection ? pendingSection : activeSection;
     const isActive = currentActive === section;
     
@@ -75,7 +74,6 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
         : "text-red-600";
     }
     
-    // Adjust text color based on scroll state for better contrast
     if (scrolled) {
       return theme === 'dark'
         ? "text-stone-200 hover:text-stone-50"
@@ -87,7 +85,6 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
     }
   };
 
-  // Get header background with smooth transitions
   const getHeaderBackground = () => {
     if (scrolled) {
       return theme === 'dark' 
@@ -111,12 +108,8 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
         }}
       >
         <nav className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-6 flex justify-between items-center">
-          {/* Logo */}
           <div 
-            className={cx(
-              "cursor-pointer group transition-all duration-300",
-              scrolled ? "transform hover:scale-105" : ""
-            )}
+            className="cursor-pointer group transition-all duration-300"
             onClick={() => handleNavClick('home')}
           >
             <div className={cx(
@@ -131,9 +124,8 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
             </div>
           </div>
           
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {sections.slice(1).map((section) => {
+            {sections.filter(s => s !== 'home').map((section) => { // Exclude home from nav links
               const currentActive = isScrolling && pendingSection ? pendingSection : activeSection;
               const isActive = currentActive === section;
               
@@ -150,31 +142,24 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
                 >
                   <span className="relative z-10">{section}</span>
                   {isActive && (
-                    <>
-                      {/* Active underline indicator */}
-                      <span className={cx(
+                    <span className={cx(
                         "absolute -bottom-1 left-0 right-0 h-px transition-all duration-300", 
                         theme === 'dark' ? "bg-red-400" : "bg-red-600",
                         scrolled ? "opacity-80" : "opacity-100"
                       )}></span>
-                    </>
                   )}
                   {!isActive && (
-                    <>
-                      {/* Hover underline - appears on hover */}
                       <span className={cx(
                         "absolute -bottom-1 left-0 right-0 h-px transition-all duration-300 opacity-0 group-hover:opacity-60",
                         theme === 'dark' 
                           ? "bg-stone-300" 
                           : "bg-stone-500"
                       )}></span>
-                    </>
                   )}
                 </button>
               );
             })}
             
-            {/* Resume button */}
             <a
               href="resume.pdf"
               download="KaitlinWood_Resume.pdf"
@@ -189,7 +174,6 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
             </a>
           </div>
           
-          {/* Mobile menu button */}
           <button
             className={cx(
               "md:hidden p-2 rounded-lg transition-colors",
@@ -205,14 +189,12 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
         </nav>
       </header>
       
-      {/* Mobile Navigation */}
       <div 
         className={cx(
           "fixed inset-0 z-40 md:hidden transition-all duration-500 font-sans",
           navOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
       >
-        {/* Backdrop */}
         <div 
           className={cx(
             "absolute inset-0 transition-opacity duration-500",
@@ -222,7 +204,6 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
           onClick={() => setNavOpen(false)}
         />
         
-        {/* Menu content */}
         <div className={cx(
           "absolute right-0 top-0 h-full w-64 p-8 transition-transform duration-500",
           theme === 'dark' ? "bg-stone-900" : "bg-white",
@@ -253,7 +234,6 @@ const Header = ({ activeSection, sections, scrollToSection }) => {
                 <span className="relative z-10">
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </span>
-                {/* Mobile hover underline */}
                 <span className={cx(
                   "absolute -bottom-1 left-0 right-0 h-px transition-all duration-300 opacity-0 group-hover:opacity-40",
                   theme === 'dark' 
