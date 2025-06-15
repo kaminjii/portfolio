@@ -1,9 +1,10 @@
-import './globals.css';
-import { ThemeProvider } from './ThemeContext';
+import "./globals.css";
+import { ThemeProvider } from "./ThemeContext";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
-  title: 'Kaitlin Wood',
-  description: 'Software Engineer portfolio showcasing projects and experience',
+  title: "Kaitlin Wood",
+  description: "Software Engineer portfolio showcasing projects and experience",
 };
 
 export default function RootLayout({ children }) {
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <ThemeProvider>
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
