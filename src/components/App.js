@@ -100,7 +100,7 @@ const App = () => {
   ];
 
   const sections = useMemo(
-    () => ["home", "about", "experience", "projects", "playground", "contact"],
+    () => ["home", "about", "experience", "projects", "contact"],
     []
   );
 
