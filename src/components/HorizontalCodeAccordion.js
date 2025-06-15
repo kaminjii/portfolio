@@ -11,7 +11,7 @@ const HorizontalCodeAccordion = ({ items }) => {
   const activeItem = items.find((item) => item.id === activeId) || items[0];
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       {/* Mobile Toggle Button */}
       <div className="lg:hidden mb-4">
         <button
@@ -42,7 +42,7 @@ const HorizontalCodeAccordion = ({ items }) => {
 
       {/* Desktop Horizontal Layout */}
       <div
-        className="hidden lg:flex w-full h-[450px] min-h-[400px] gap-4 transition-all duration-500"
+        className="hidden lg:flex w-full h-full gap-4 transition-all duration-500"
         onMouseLeave={() => setActiveId(items[0]?.id || "jsx")}
       >
         {items.map((item) => {

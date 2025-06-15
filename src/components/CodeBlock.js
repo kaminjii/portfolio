@@ -36,7 +36,7 @@ const CodeBlock = ({ code, language }) => {
           .replace(/"/g, "&quot;")
           .replace(/'/g, "&#39;");
 
-        if (language === "jsx") {
+        if (language === "html") {
           highlightedLine = highlightedLine
             .replace(/(\w+)=/g, '<span class="jsx-attr">$1</span>=')
             .replace(/(&lt;\/?)(\w+)/g, '$1<span class="jsx-tag">$2</span>')
