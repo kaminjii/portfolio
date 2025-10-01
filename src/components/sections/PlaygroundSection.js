@@ -19,7 +19,7 @@ import CodeBlock from "../CodeBlock";
 import cx from "../../utils/cx";
 import FadeIn from "../animations/FadeIn";
 import SparkleButton from "../SparkleButton";
-import GlassmorphismCards from "../GlassmorphismCards";
+// import GlassmorphismCards from "../GlassmorphismCards";
 import SmoothCursor from "../animations/SmoothCursor";
 
 // Playground projects data
@@ -35,17 +35,17 @@ const playgroundProjects = [
     component: SparkleButton,
     difficulty: "Intermediate",
   },
-  {
-    id: "glassmorphism-cards",
-    title: "Glassmorphism Cards",
-    description:
-      "Modern glass-effect cards with backdrop blur and smooth animations",
-    tags: ["Glassmorphism", "CSS Effects", "Modern UI"],
-    color: "from-blue-500 to-cyan-500",
-    icon: Palette,
-    component: GlassmorphismCards,
-    difficulty: "Beginner",
-  },
+  // {
+  //   id: "glassmorphism-cards",
+  //   title: "Glassmorphism Cards",
+  //   description:
+  //     "Modern glass-effect cards with backdrop blur and smooth animations",
+  //   tags: ["Glassmorphism", "CSS Effects", "Modern UI"],
+  //   color: "from-blue-500 to-cyan-500",
+  //   icon: Palette,
+  //   component: GlassmorphismCards,
+  //   difficulty: "Beginner",
+  // },
   {
     id: "code-editor",
     title: "Live Code Editor",
