@@ -297,7 +297,7 @@ const ProjectDetailPage = ({ project, onBack }) => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [handleMouseMove, handleMouseUp]);
 
   // Create tabs with actual code content for projects
   const getProjectTabs = () => {

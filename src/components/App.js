@@ -181,6 +181,13 @@ const App = () => {
     return () => window.removeEventListener("scroll", handleScrollUpdate);
   }, [handleScrollUpdate]);
 
+  useEffect(() => {
+    const hasSeenLanding = sessionStorage.getItem("hasSeenLanding");
+    if (hasSeenLanding) {
+      setShowLanding(false);
+    }
+  }, []);
+
   const scrollToSection = (sectionId) => {
     const element = sectionRefs[sectionId]?.current;
     if (element) {
@@ -200,13 +207,6 @@ const App = () => {
 
   // Parallax effect calculation
   const parallaxOffset = scrollY * 0.5;
-
-  useEffect(() => {
-    const hasSeenLanding = sessionStorage.getItem("hasSeenLanding");
-    if (hasSeenLanding) {
-      setShowLanding(false);
-    }
-  }, []);
 
   const handleLandingComplete = () => {
     setShowLanding(false);
