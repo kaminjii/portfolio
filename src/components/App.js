@@ -761,12 +761,12 @@ const App = () => {
                         theme === "dark" ? "text-stone-300" : "text-stone-600"
                       )}
                     >
-                      I recently graduated from the University of Houston with a
-                      Bachelor of Science in Computer Science and a minor in
-                      Mathematics. This combination has given me a unique
-                      perspective on problem-solving, allowing me to approach
-                      challenges with both analytical rigor and creative
-                      thinking.
+                      I graduated from the University of Houston with a Bachelor
+                      of Science in Computer Science and a minor in Mathematics.
+                      Since then, I&apos;ve honed my skills in front-end and
+                      back-end development, working with technologies like
+                      React, Node.js, and Express to build seamless web
+                      applications.
                     </p>
                   </FadeIn>
 
@@ -780,8 +780,8 @@ const App = () => {
                       When I&apos;m not coding, you&apos;ll find me exploring
                       local coffee shops, sketching interface ideas, or diving
                       into the latest design trends. I believe that great
-                      software is not just about functionality—it&apos;s about
-                      creating experiences that delight and inspire.
+                      software is about creating experiences that delight and
+                      inspire and are accessible to all.
                     </p>
                   </FadeIn>
                 </div>
