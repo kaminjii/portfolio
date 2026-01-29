@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Mail, Send, Heart, Linkedin, Github } from 'lucide-react';
 import FadeIn from '../animations/FadeIn'; 
 import { useTheme } from '../../app/ThemeContext'; 
@@ -16,6 +16,7 @@ const ContactSection = ({ sectionRef }) => {
     error: false
   });
   const { theme } = useTheme();
+  const nameInputRef = useRef(null);
 
   const accentColorText = theme === 'dark' ? "text-red-400" : "text-red-600";
   const accentColorBorderFocus = theme === 'dark' ? "focus:border-red-500" : "focus:border-red-600";
@@ -105,6 +106,7 @@ const ContactSection = ({ sectionRef }) => {
                   type="text"
                   id="name"
                   name="name"
+                  ref={nameInputRef}
                   value={formState.name}
                   onChange={handleChange}
                   className={cx(

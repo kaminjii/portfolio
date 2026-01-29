@@ -504,7 +504,14 @@ const App = () => {
                     </button>
 
                     <button
-                      onClick={() => scrollToSection("contact")}
+                      onClick={() => {
+                        scrollToSection("contact");
+                        // Focus the first input in the contact form after a short delay to allow scroll
+                        setTimeout(() => {
+                          const nameInput = document.querySelector('input[name="name"]');
+                          if (nameInput) nameInput.focus();
+                        }, 600);
+                      }}
                       className={cx(
                         "btn-oriental group flex items-center gap-3 px-8 py-3 rounded-full text-lg font-medium border-2",
                         "transition-all duration-300 transform hover:scale-105 relative overflow-hidden",

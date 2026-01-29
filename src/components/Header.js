@@ -68,6 +68,22 @@ const Header = ({
     setPendingSection(section);
     setIsScrolling(true);
     scrollToSection(section);
+    
+    // Focus management for accessibility
+    setTimeout(() => {
+      // Try to focus the section heading (h1 or h2) for better accessibility
+      const sectionElement = document.getElementById(section);
+      if (sectionElement) {
+        const heading = sectionElement.querySelector('h1, h2');
+        if (heading) {
+          heading.setAttribute('tabindex', '-1');
+          heading.focus();
+          heading.addEventListener('blur', () => {
+            heading.removeAttribute('tabindex');
+          }, { once: true });
+        }
+      }
+    }, 600);
   };
 
   const getNavLinkStyles = (section) => {
