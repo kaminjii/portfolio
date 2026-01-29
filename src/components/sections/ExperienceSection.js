@@ -9,6 +9,13 @@ import {
   Users,
   Zap,
   Target,
+  Accessibility,
+  Shield,
+  Award,
+  Lightbulb,
+  BookOpen,
+  Brain,
+  Cpu,
 } from "lucide-react";
 import FadeIn from "../animations/FadeIn";
 import { useTheme } from "../../app/ThemeContext";
@@ -22,19 +29,30 @@ const experienceData = [
     location: "St. Louis, MO",
     period: "February 2025 – Present",
     type: "Full-time",
-    skills: ["React", "TypeScript", "CI/CD", "Jenkins", "Java", "Spring Boot"],
+    skills: [
+      "React",
+      "TypeScript",
+      "Spring Boot",
+      "Java",
+      "API Development",
+      "CDN",
+    ],
     achievements: [
       {
-        icon: Zap,
+        icon: Shield,
+        text: "Engineered critical anti-fraud API with Spring Boot to automatically block malicious card testing transactions",
+      },
+      {
+        icon: Award,
+        text: "Earned team MVP for employee portal with SSO integration and CDN optimization, reducing bundle size by 40%",
+      },
+      {
+        icon: Lightbulb,
+        text: "Awarded 1st Place in product-wide innovation challenge over senior and lead engineers for an AI chatbot POC",
+      },
+      {
+        icon: Accessibility,
         text: "Build accessible UI components with ARIA attributes and keyboard navigation, increasing usability score",
-      },
-      {
-        icon: Target,
-        text: "Implement robust test coverage during JS to TSX migration, improving overall code coverage to 98%",
-      },
-      {
-        icon: Trophy,
-        text: "Optimized CI/CD Jenkins pipeline, decreasing build times by 35% while automating deployment processes",
       },
     ],
   },
@@ -49,15 +67,15 @@ const experienceData = [
     skills: ["Data Structures", "Algorithms", "Python", "C++"],
     achievements: [
       {
-        icon: Users,
+        icon: BookOpen,
         text: "Mentored 450 students in understanding data structures, algorithms, and problem-solving, achieving 90% pass rate",
       },
       {
-        icon: Target,
+        icon: Users,
         text: "Provided weekly office hours and review sessions for 50+ students, improving assignment completion rates by 15%",
       },
       {
-        icon: Zap,
+        icon: Brain,
         text: "Increased student engagement by collaborating with the teaching team to design skill-specific problem sets",
       },
     ],
@@ -72,7 +90,7 @@ const experienceData = [
     skills: ["VR Development", "Machine Learning", "Python", "Unity", "C#"],
     achievements: [
       {
-        icon: Zap,
+        icon: Cpu,
         text: "Developed VR surgical training environments, incorporating eye-tracking and PVT outcomes to measure fatigue",
       },
       {
