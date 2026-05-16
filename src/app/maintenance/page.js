@@ -1,49 +1,73 @@
+"use client";
+
+import { useTheme } from "../ThemeContext";
+import { useEffect, useState } from "react";
+
 export default function MaintenancePage() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const isDark = theme === "dark";
+
   return (
-    <div style={styles.container}>
-      <div style={styles.content}>
-        <h1 style={styles.heading}>Under Maintenance</h1>
-        <p style={styles.text}>
-          We&apos;re working on something new! We&apos;ll be back online
-          shortly.
+    <div
+      className={`min-h-screen flex items-center justify-center transition-colors duration-300 ${
+        isDark ? "bg-stone-950" : "bg-stone-50"
+      }`}
+    >
+      {/* Content */}
+      <div className="relative z-10 text-center px-4 max-w-md">
+        {/* Small decorative line */}
+        <div
+          className={`h-px w-12 mx-auto mb-8 ${
+            isDark ? "bg-stone-700" : "bg-stone-300"
+          }`}
+        />
+
+        {/* Heading */}
+        <h1
+          className={`text-4xl md:text-5xl font-serif font-light mb-4 transition-colors tracking-tight ${
+            isDark ? "text-stone-100" : "text-stone-900"
+          }`}
+        >
+          A moment, please
+        </h1>
+
+        {/* Subheading */}
+        <p
+          className={`text-lg font-serif font-light mb-12 transition-colors leading-relaxed ${
+            isDark ? "text-stone-400" : "text-stone-600"
+          }`}
+        >
+          I&apos;m crafting something new. Back soon.
         </p>
-        <div style={styles.spinner}></div>
+
+        {/* Animated dots */}
+        <div className="flex justify-center gap-2">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className={`w-2 h-2 rounded-full transition-opacity ${
+                isDark ? "bg-stone-600" : "bg-stone-400"
+              } animate-pulse`}
+              style={{ animationDelay: `${i * 0.2}s` }}
+            />
+          ))}
+        </div>
+
+        {/* Small decorative line */}
+        <div
+          className={`h-px w-12 mx-auto mt-8 ${
+            isDark ? "bg-stone-700" : "bg-stone-300"
+          }`}
+        />
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  },
-  content: {
-    textAlign: "center",
-    color: "white",
-  },
-  heading: {
-    fontSize: "48px",
-    marginBottom: "16px",
-    fontWeight: "700",
-  },
-  text: {
-    fontSize: "18px",
-    marginBottom: "32px",
-    opacity: "0.9",
-  },
-  spinner: {
-    width: "40px",
-    height: "40px",
-    border: "4px solid rgba(255, 255, 255, 0.3)",
-    borderTop: "4px solid white",
-    borderRadius: "50%",
-    animation: "spin 1s linear infinite",
-    margin: "0 auto",
-  },
-};

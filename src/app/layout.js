@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ThemeProvider } from "./ThemeContext";
 import { Analytics } from "@vercel/analytics/next";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Kaitlin Wood",
